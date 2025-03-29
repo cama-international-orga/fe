@@ -7,13 +7,14 @@ export const scrollContainer = style({
 });
 
 export const pageContainer = style({
-  width: "100vw",
+  width: "100%",
   height: "100vh",
   scrollSnapAlign: "start", // 스크롤 스냅 포인트
   position: "relative",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  overflow: "hidden",
 });
 
 export const paginationContainer = style({
@@ -32,7 +33,7 @@ export const paginationDot = style({
   height: "12px",
   borderRadius: "50%",
   backgroundColor: "rgba(255, 255, 255, 0.5)",
-  border: "none",
+  border: "1px solid black",
   cursor: "pointer",
   transition: "all 0.3s ease",
 });
@@ -46,7 +47,7 @@ export const mediaStyle = style({
   position: "absolute",
   width: "100%",
   height: "100%",
-  background: `url('your-image.jpg') center/cover`,
+  background: `url('../../assets/png/main-page-thumbnail3.png') center/cover`,
   filter: "brightness(0.7)",
   objectFit: "cover",
 });
