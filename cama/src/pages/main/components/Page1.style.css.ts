@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 // index.style.css.ts에 추가
 export const scrollIndicatorStyle = style({
   position: "absolute",
-  bottom: "120px",
+  bottom: "50px",
   left: "50%",
   transform: "translateX(-50%)",
   zIndex: 10,

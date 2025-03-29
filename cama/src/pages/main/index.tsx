@@ -12,6 +12,7 @@ import Page2 from "./components/Page2";
 import Page3 from "./components/Page3";
 import Page4 from "./components/Page4";
 import Page5 from "./components/Page5";
+import Header from "../../components/Header";
 
 const MainPage = () => {
   const [activePage, setActivePage] = useState(0);
@@ -69,23 +70,23 @@ const MainPage = () => {
   }, [handleWheel]);
 
   return (
-    <>
-      <div className={scrollContainer} ref={containerRef}>
-        <div className={pageContainer}>
-          <Page1 />
-        </div>
-        <div className={pageContainer}>
-          <Page2 />
-        </div>
-        <div className={pageContainer}>
-          <Page3 />
-        </div>
-        <div className={pageContainer}>
-          <Page4 />
-        </div>
-        <div className={pageContainer}>
-          <Page5 />
-        </div>
+    <div className={scrollContainer} ref={containerRef}>
+      <div className={pageContainer}>
+        <Header />
+
+        <Page1 />
+      </div>
+      <div className={pageContainer}>
+        <Page2 />
+      </div>
+      <div className={pageContainer}>
+        <Page3 />
+      </div>
+      <div className={pageContainer}>
+        <Page4 />
+      </div>
+      <div className={pageContainer}>
+        <Page5 />
       </div>
 
       {/* 페이지 네비게이션 */}
@@ -103,7 +104,7 @@ const MainPage = () => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
