@@ -8,7 +8,6 @@ import {
   activeDot,
 } from "./index.style.css";
 import { Page1, Page2, Page3, Page4, Page5 } from "./components";
-import Header from "../../components/Header";
 
 const MainPage = () => {
   const totalPages = 5;
@@ -19,7 +18,6 @@ const MainPage = () => {
   return (
     <div className={scrollContainer} ref={containerRef}>
       <div className={pageContainer}>
-        <Header />
         <Page1 />
       </div>
       <div className={pageContainer}>
