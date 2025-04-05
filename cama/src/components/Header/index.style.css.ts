@@ -8,6 +8,7 @@ export const header = style({
   width: "100%",
   backgroundColor: "#0f0f12",
   position: "absolute",
+  height: "120px",
 });
 
 export const container = style({
