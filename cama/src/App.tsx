@@ -1,19 +1,18 @@
 import "./App.css";
 import Header from "./components/Header";
-import { MainPage, ProductsPage, AdminLoginPage } from "./pages";
+import { useAppHook } from "./hooks/useAppHook";
+import { MainPage, CategoryDetailPage, AdminLoginPage } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useAuth } from "./contexts";
-
 function App() {
-  const { isLoggedIn } = useAuth();
+  const { navItems, isLoggedIn } = useAppHook();
   return (
     <BrowserRouter>
-      <Header />
+      <Header navItems={navItems} isLoggedIn={isLoggedIn} />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route
-          path="/products"
-          element={<ProductsPage isLoggedIn={isLoggedIn} />}
+          path="/categories/:categoryId"
+          element={<CategoryDetailPage isLoggedIn={isLoggedIn} />}
         />
         <Route path="/admin" element={<AdminLoginPage />} />
       </Routes>
