@@ -8,7 +8,7 @@ export const header = style({
   width: "100%",
   backgroundColor: "#0f0f12",
   position: "absolute",
-  height: "120px",
+  height: "90px",
 });
 
 export const container = style({
@@ -17,17 +17,18 @@ export const container = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  alignSelf: "center",
+  alignContent: "center",
 });
 
 export const logoContainer = style({
   display: "flex",
   alignItems: "center",
+  alignSelf: "center",
 });
 
 export const logo = style({
   width: "15vw",
-  margin: "2rem",
-  marginTop: "-0rem",
 });
 
 export const mobileActions = style({
@@ -46,17 +47,7 @@ export const navList = style({
   alignItems: "center",
 });
 
-export const navItem = style({
-  display: "flex",
-  alignItems: "center",
-  color: "#ffffff", // 원래 주석 처리된 색상은 #4b5563
-  fontSize: "1.5rem",
-  padding: "0.75rem 1rem",
-  textDecoration: "none",
-  backgroundColor: "none",
-  border: "none",
-  transition: "background-color 0.2s",
-});
+
 
 // .navItem:hover { background-color: #e9ecef; }
 // 주석 처리된 hover 스타일은 필요 시 추가 가능

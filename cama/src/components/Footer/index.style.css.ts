@@ -2,6 +2,7 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 
 export const footer = style({
+  width: "100%",
   backgroundColor: "#1A1A1A",
   color: "#A9A9A9",
   padding: "60px 0 40px",
