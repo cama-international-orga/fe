@@ -6,24 +6,14 @@ interface Product {
   name: string;
   image: string;
   gridArea: string;
-  description?: string;
-  category?: string;
 }
 
-interface ProductItemProps {
-  product: Product;
-}
-
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ id, name, image, gridArea }: Product) => {
   return (
-    <div
-      key={product.id}
-      className={imageItem}
-      style={{ gridArea: product.gridArea }}
-    >
-      <img src={product.image} alt={product.name} />
+    <div key={id} className={imageItem} style={{ gridArea: gridArea }}>
+      <img src={image} alt={name} />
       <div className={imageOverlay}>
-        <div className={overlayText}>{product.name}</div>
+        <div className={overlayText}>{name}</div>
       </div>
     </div>
   );
