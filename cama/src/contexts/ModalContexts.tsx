@@ -31,9 +31,14 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   const [modals, setModals] = useState<ModalProps[]>([]);
 
   // 모달 열기
-  const openModal = ({ component, props }: Omit<ModalProps, "id">) => {
-    const id = Math.random().toString(36).substring(2);
-    setModals((prev) => [...prev, { id, component, props }]);
+  const openModal = ({
+    component,
+    props,
+    id,
+  }: Omit<ModalProps, "id"> & { id?: string }) => {
+    const modalId = id || Math.random().toString(36).substring(2);
+    setModals((prev) => [...prev, { id: modalId, component, props }]);
+    return modalId; // ID 반환하여 필요시 사용할 수 있게 함
   };
 
   // 특정 모달 닫기
@@ -58,8 +63,8 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <ModalContext.Provider value={contextValue}>
-      {children}
       <ModalPortal />
+      {children}
     </ModalContext.Provider>
   );
 };
