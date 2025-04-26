@@ -4,6 +4,8 @@ import axios, {
   AxiosResponse,
   AxiosInstance,
 } from "axios";
+import { TAuthResponse, TAnotherToken } from "./auth/type";
+import { toast } from "sonner";
 
 // 한 요청에 대해 무한 재시도를 방지하기 위한 장치
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
@@ -11,18 +13,14 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-type TAnotherToken = {
-  accessToken: string;
-};
-
-type TAuthResponse = {
-  accessToken: string;
-};
+// public 인스턴스
 export const publicInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APP_SERVER_URL,
+  baseURL: `${import.meta.env.VITE_API_URL}/public`,
 });
+
+// private 인스턴스
 export const privateInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APP_SERVER_URL,
+  baseURL: `${import.meta.env.VITE_API_URL}/admin`,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
   },
@@ -49,7 +47,7 @@ privateInstance.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => response,
   async (error: AxiosError): Promise<AxiosResponse> => {
     const originalRequest = error.config as CustomAxiosRequestConfig;
-    console.error("🚨어드민 Reponse 경고:", error);
+    toast.error("🚨어드민 권한 경고", { description: error.message });
 
     // 재시도 여부 확인
     if (error.response?.status !== 401 || originalRequest._retry) {
