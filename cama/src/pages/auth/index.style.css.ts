@@ -22,7 +22,7 @@ export const loginForm = style({
   gap: "20px",
 });
 
-export const passwordInput = style({
+export const loginInput = style({
   width: "90%",
   padding: "12px",
   fontSize: "16px",
