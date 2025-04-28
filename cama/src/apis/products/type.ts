@@ -4,7 +4,7 @@ export interface Product {
   name: string;
 }
 
-export interface CompanyProps {
+export interface Company {
   companyId: string;
   companyName: string;
 }
@@ -12,6 +12,6 @@ export interface CompanyProps {
 //TODO-[productLists] 추후 수정 필요
 export interface CategoryDetail {
   thumbNail: string;
-  companyLists: CompanyProps[];
+  companyLists: Company[];
   productLists: Product[] | null;
 }

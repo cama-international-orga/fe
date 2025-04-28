@@ -10,22 +10,23 @@ import {
   pageButton,
   // productPlusButton,
 } from "./index.style.css";
-import { useCategoryDetaiHook } from "./hooks/useCategoryDetaiHook";
-import { Product, Company } from "./components";
+import useCategoryDetailHook from "./hooks/useCategoryDetailHook";
 import Footer from "../../components/Footer";
 import { useParams } from "react-router-dom";
+import ProductContainer from "./components/Product";
+import CompanyContainer from "./components/Company";
 
 function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const { categoryId } = useParams();
+  const { categoryPath } = useParams();
   const {
     categoryThumbnail,
     companys,
     products,
     removeProduct,
     modifyThumbnail,
-    addCompany,
+    addCompanyModalOn,
     // addProduct,
-  } = useCategoryDetaiHook(categoryId ? categoryId : "0");
+  } = useCategoryDetailHook(categoryPath ? categoryPath : "0");
 
   return (
     <div className={container}>
@@ -47,24 +48,26 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
       </div>
       <div className={companyBar}>
         {companys?.map((company) => (
-          <Company
+          <CompanyContainer
             key={company.companyId}
             companyId={company.companyId}
             companyName={company.companyName}
+            isLoggedIn={isLoggedIn}
           />
         ))}
-        {isLoggedIn && <button onClick={addCompany}>+</button>}
+        {isLoggedIn && <button onClick={addCompanyModalOn}>+</button>}
       </div>
 
       <div className={productContainer}>
         <div className={productGrid}>
           {products?.map((product) => (
-            <Product
+            <ProductContainer
               key={product.id}
               id={product.id}
               image={product.image}
               name={product.name}
               onRemove={removeProduct}
+              isLoggedIn={isLoggedIn}
             />
           ))}
           {/* {isLoggedIn && (

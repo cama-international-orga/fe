@@ -16,10 +16,20 @@ export const deleteProduct = async (productId: string): Promise<void> => {
 };
 
 export const addCompany = async (
-  categoryId: string,
+  categoryPath: string,
   companyName: string
 ): Promise<void> => {
-  await privateInstance.post(`/categories/${categoryId}/company`, {
+  await privateInstance.post(`/categories/${categoryPath}/company`, {
     companyName,
   });
+};
+
+export const deleteCompany = async (
+  categoryPath: string,
+  copmanyId: string
+): Promise<void> => {
+  const response = await privateInstance.delete(
+    `/categories/${categoryPath}/company/${copmanyId}`
+  );
+  console.log(response);
 };

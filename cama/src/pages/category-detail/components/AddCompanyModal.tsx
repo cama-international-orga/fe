@@ -8,9 +8,12 @@ import { input, addButton } from "./AddCompanyModal.style.css";
 import { useModal } from "../../../contexts";
 import { addCompany } from "../../../apis/products/products";
 
-export default function AddCompanyModal({ categoryId }: { categoryId: string }) {
-  const { closeAllModals } = useModal();
+interface AddCompanyModalProps {
+  categoryPath?: string;
+}
 
+const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
+  const { closeAllModals } = useModal();
   const [companyName, setCompanyName] = useState("");
   return (
     <div>
@@ -19,8 +22,9 @@ export default function AddCompanyModal({ categoryId }: { categoryId: string }) 
         onSubmit={async (e) => {
           e.preventDefault();
           closeAllModals();
-          addCompany(categoryId, companyName);
-          // window.location.reload();
+          await addCompany(categoryPath ? categoryPath : "0", companyName);
+          window.location.reload();
+
         }}
       >
         <input
@@ -37,4 +41,6 @@ export default function AddCompanyModal({ categoryId }: { categoryId: string }) 
       </form>
     </div>
   );
-}
+};
+
+export default AddCompanyModal;

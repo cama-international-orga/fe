@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
-import { Product, CompanyProps } from "../../../apis/products/type";
-import { getProducts } from "../../../apis/products/products";
+import { Product, Company } from "../../../apis/products/type";
+import { deleteCompany, getProducts } from "../../../apis/products/products";
 import { useModal } from "../../../contexts";
-import { AddCompanyModal } from "../components";
-export const useCategoryDetaiHook = (category: string) => {
+import AddCompanyModal from "../components/AddCompanyModal";
+import DeleteModal from "../../../components/DeleteModal";
+import { toast } from "sonner";
+
+const useCategoryDetailHook = (categoryPath: string) => {
   const [categoryThumbnail, setCategoryThumbnail] = useState<string>();
-  const [companys, setCompanys] = useState<CompanyProps[]>([]);
+  const [companys, setCompanys] = useState<Company[]>([]);
   const [products, setProducts] = useState<Product[] | null>(null);
 
-  const { openModal } = useModal();
+  const { openModal, closeAllModals } = useModal();
   // 최초 입력받은 category 값을 통해 API 호출로 최초 데이터 가져오기
   useEffect(() => {
     const fetchDefault = async () => {
-      const response = await getProducts(category, "0");
+      const response = await getProducts(categoryPath, "0");
       console.log(response);
       setCategoryThumbnail(response.thumbNail);
       setCompanys(response.companyLists);
@@ -28,19 +31,28 @@ export const useCategoryDetaiHook = (category: string) => {
     // 모달 창 띄우기
   };
 
-  const addCompany = () => {
+  const addCompanyModalOn = () => {
     // API 호출 필요
     // 모달 창 띄우기
     openModal({
       component: AddCompanyModal,
-      props: { categoryId: category },
+      props: { categoryPath: categoryPath },
     });
   };
 
-  const removeCompany = (id: string) => {
-    console.log(id);
-    // API 호출 필요
-    // 모달 창 띄우기
+  const removeCompanyModalOn = (companyId: string) => {
+    openModal({
+      component: DeleteModal,
+      props: {
+        handleDelete: async () => {
+          await deleteCompany(categoryPath, companyId);
+          console.log(`companyId 삭제됨: ${companyId}`);
+          closeAllModals();
+          toast.success("회사가 삭제되었습니다.");
+          window.location.reload();
+        },
+      },
+    });
   };
 
   const addProduct = (newProduct: Product) => {
@@ -60,9 +72,11 @@ export const useCategoryDetaiHook = (category: string) => {
     products,
     companys,
     modifyThumbnail,
-    addCompany,
-    removeCompany,
+    addCompanyModalOn,
+    removeCompanyModalOn,
     addProduct,
     removeProduct,
   };
 };
+
+export default useCategoryDetailHook;

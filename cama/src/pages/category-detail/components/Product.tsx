@@ -1,9 +1,20 @@
 // Product.tsx
 import React from "react";
 import { productItem } from "./Product.style.css";
-import { ProductProps } from "../../../apis/products/type";
+import { Product } from "../../../apis/products/type";
 
-const Product: React.FC<ProductProps> = ({ id, image, name, onRemove, isLoggedIn }) => {
+interface ProductProps extends Product {
+  onRemove: (id: string) => void;
+  isLoggedIn: boolean;
+}
+
+const ProductContainer: React.FC<ProductProps> = ({
+  id,
+  image,
+  name,
+  onRemove,
+  isLoggedIn,
+}) => {
   return (
     <div className={productItem}>
       <img src={image} alt={name} />
@@ -13,4 +24,4 @@ const Product: React.FC<ProductProps> = ({ id, image, name, onRemove, isLoggedIn
   );
 };
 
-export default Product;
+export default ProductContainer;
