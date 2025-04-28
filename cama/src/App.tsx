@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route
-          path="/categories/:categoryId"
+          path="/categories/:categoryPath"
           element={<CategoryDetailPage isLoggedIn={isLoggedIn} />}
         />
         <Route path="/admin" element={<AdminLoginPage />} />
