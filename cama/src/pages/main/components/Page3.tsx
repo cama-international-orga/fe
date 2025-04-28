@@ -7,7 +7,7 @@ import {
 } from "./Page3.style.css";
 import { useEffect, useState } from "react";
 import { publicInstance } from "../../../apis/axios";
-import { page3DummyProducts } from "./DummyProduct";
+
 // gridArea 레이아웃 설정을 상수로 정의
 const GRID_AREAS = [
   "1 / 1 / 2 / 3",
@@ -49,20 +49,20 @@ const Page3 = () => {
       } catch (error) {
         console.error("제품 데이터를 가져오는데 실패했습니다", error);
         // 에러 발생 시 기본 데이터 사용
-        setProducts(getDefaultProducts());
+        // setProducts(getDefaultProducts());
       }
     };
 
     fetchProducts();
   }, []);
 
-  // API 호출 실패 시 사용할 기본 데이터
-  const getDefaultProducts = (): Product[] => {
-    return page3DummyProducts.map((product) => ({
-      ...product,
-      gridArea: product.gridArea,
-    }));
-  };
+  // // API 호출 실패 시 사용할 기본 데이터
+  // const getDefaultProducts = (): Product[] => {
+  //   return page3DummyProducts.map((product) => ({
+  //     ...product,
+  //     gridArea: product.gridArea,
+  //   }));
+  // };
 
   return (
     <div className={irregularGrid}>
