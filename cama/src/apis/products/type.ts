@@ -1,7 +1,7 @@
-export interface Product {
-  id: string;
-  image: string;
-  name: string;
+export interface Products {
+  productsId: string;
+  productsImage: string;
+  productsName: string;
 }
 
 export interface Company {
@@ -13,5 +13,5 @@ export interface Company {
 export interface CategoryDetail {
   thumbNail: string;
   companyLists: Company[];
-  productLists: Product[] | null;
+  productsLists: Products[] | null;
 }

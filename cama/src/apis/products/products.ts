@@ -7,12 +7,22 @@ export const getProducts = async (
   const response = await publicInstance.get(
     `/categories/${categoryId}/company/${companyId}`
   );
-  console.log(response);
   return response.data.data;
 };
 
+export const addProduct = async (
+  categoryPath: string,
+  companyId: string,
+  formData: FormData
+): Promise<void> => {
+  await privateInstance.post(
+    `/products/${categoryPath}/${companyId}`,
+    formData
+  );
+};
+
 export const deleteProduct = async (productId: string): Promise<void> => {
-  await privateInstance.delete(`/categories/${productId}`);
+  await privateInstance.delete(`/products/${productId}`);
 };
 
 export const addCompany = async (
