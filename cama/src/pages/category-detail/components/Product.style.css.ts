@@ -1,35 +1,75 @@
 import { style, globalStyle } from "@vanilla-extract/css";
+
 // 제품 아이템 스타일
 export const productItem = style({
-  border: "1px solid #ddd",
-  borderRadius: "4px",
-  padding: "16px",
+  position: "relative",
+  padding: "0",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  overflow: "hidden",
+  cursor: "pointer",
+  background: "#fff",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+  transition: "box-shadow 0.2s",
+  ":hover": {
+    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+  },
 });
 
-// 제품 이미지에 대한 글로벌 스타일
+// 이미지 스타일
 globalStyle(`${productItem} img`, {
   width: "100%",
+  aspectRatio: "1/1",
   height: "auto",
   objectFit: "cover",
-  marginBottom: "8px",
 });
 
-// 제품 ID에 대한 글로벌 스타일
-globalStyle(`${productItem} p`, {
-  margin: "8px 0",
-  color: "#666",
+// 오버레이(상품명+삭제) 스타일
+export const overlay = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  background: "rgba(0,0,0,0.55)",
+  color: "#fff",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  opacity: 0,
+  transition: "opacity 0.2s",
+  zIndex: 2,
+  fontSize: "1.1rem",
+  fontWeight: 500,
+  pointerEvents: "none",
 });
 
-// 제품 삭제 버튼에 대한 글로벌 스타일
-globalStyle(`${productItem} button`, {
-  marginTop: "8px",
-  padding: "8px 16px",
-  background: "#333",
-  color: "white",
+export const showOverlay = style({
+  opacity: 1,
+  pointerEvents: "auto",
+});
+
+// 삭제 버튼 스타일
+export const deleteBtn = style({
+  color: "red",
   border: "none",
-  borderRadius: "4px",
+  background: "none",
+  position: "absolute",
+  top: "10px",
+  right: "10px",
+  fontSize: "1.3rem",
+  fontWeight: 700,
   cursor: "pointer",
+  transition: "background 0.2s, color 0.2s",
+  ":hover": {
+    color: "#b30000",
+  },
+});
+
+export const productNameContainer = style({
+  fontSize: "1.3rem",
+  fontWeight: 700,
+  color: "#fff",
 });

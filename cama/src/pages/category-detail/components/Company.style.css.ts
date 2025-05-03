@@ -20,14 +20,12 @@ export const companyBtnActive = style({
   background: "#222",
   color: "#fff",
 });
+
 export const deleteBtn = style({
+  flex: 1,
   position: "absolute",
-  top: 0,
-  right: 0,
-  background: "none",
-  border: "none",
-  color: "#ff0000",
-  fontSize: "1.2rem",
+  right: 1,
+  color: "red",
+
   cursor: "pointer",
-  marginLeft: "10px",
 });

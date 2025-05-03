@@ -24,7 +24,6 @@ const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
           closeAllModals();
           await addCompany(categoryPath ? categoryPath : "0", companyName);
           window.location.reload();
-
         }}
       >
         <input

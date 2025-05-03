@@ -2,7 +2,7 @@ import { style, globalStyle } from "@vanilla-extract/css";
 
 // 컨테이너 스타일
 export const container = style({
-  marginTop: "140px",
+  marginTop: "90px",
   display: "flex",
   height: "auto",
   fontFamily: "Arial, sans-serif",
@@ -12,15 +12,27 @@ export const container = style({
 
 // 썸네일 컨테이너 스타일
 export const thumbnailContainer = style({
+  width: "100%",
   marginBottom: "20px",
   display: "flex",
   gap: "10px",
+  position: "relative",
+});
+
+export const thumbnailModifyButton = style({
+  position: "absolute",
+  top: "0",
+  right: "0",
+  border: "1px solid #ddd",
+  background: "#ffffff",
+  cursor: "pointer",
+  transition: "background-color 0.3s",
 });
 
 // 썸네일 이미지 스타일
 export const thumbnail = style({
-  width: "1200px",
-  height: "300px",
+  width: "100%",
+  aspectRatio: "1920/330",
 });
 
 // 카테고리 바 스타일
@@ -37,20 +49,6 @@ export const companyBar = style({
   borderBottom: "1px solid #ddd",
 });
 
-// 카테고리 버튼에 대한 글로벌 스타일
-globalStyle(`${companyBar} button`, {
-  padding: "8px 16px",
-  border: "none",
-  height: "100%",
-  background: "#f5f5f5",
-  cursor: "pointer",
-  transition: "background-color 0.3s",
-});
-
-globalStyle(`${companyBar} button:hover`, {
-  background: "#ddd",
-});
-
 // 제품 컨테이너 스타일
 export const productContainer = style({
   marginTop: "20px",
@@ -62,7 +60,6 @@ export const productContainer = style({
 export const productGrid = style({
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
-  gap: "20px",
 });
 
 export const pageContainer = style({

@@ -1,25 +1,46 @@
 // Product.tsx
-import React from "react";
-import { productItem } from "./Product.style.css";
-import { Product } from "../../../apis/products/type";
+import React, { useState } from "react";
+import {
+  productItem,
+  overlay,
+  showOverlay,
+  deleteBtn,
+  productNameContainer,
+} from "./Product.style.css";
+import { Products } from "../../../apis/products/type";
 
-interface ProductProps extends Product {
-  onRemove: (id: string) => void;
+interface ProductProps extends Products {
+  onRemove: (productId: string) => void;
+  onClick: () => void;
   isLoggedIn: boolean;
 }
 
 const ProductContainer: React.FC<ProductProps> = ({
-  id,
-  image,
-  name,
+  productsId,
+  productsImage,
+  productsName,
   onRemove,
+  onClick,
   isLoggedIn,
 }) => {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <div className={productItem}>
-      <img src={image} alt={name} />
-      <p>{id}</p>
-      {isLoggedIn && <button onClick={() => onRemove(id)}>X</button>}
+    <div
+      className={productItem}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+    >
+      <img src={productsImage} alt={productsName} />
+      <div className={`${overlay} ${hovered ? showOverlay : ""}`}>
+        <div className={productNameContainer}>{productsName}</div>
+        {isLoggedIn && (
+          <button className={deleteBtn} onClick={() => onRemove(productsId)}>
+            X
+          </button>
+        )}
+      </div>
     </div>
   );
 };

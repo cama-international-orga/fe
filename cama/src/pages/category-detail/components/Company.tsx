@@ -3,30 +3,47 @@ import React from "react";
 import { Company } from "../../../apis/products/type";
 import { companyBar, companyBtn, deleteBtn } from "./Company.style.css";
 import useCategoryDetailHook from "../hooks/useCategoryDetailHook";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export interface CompanyProps extends Company {
+  categoryPath: string;
   isLoggedIn: boolean;
+  isAll?: boolean;
 }
 const CompanyContainer: React.FC<CompanyProps> = ({
+  categoryPath,
   companyId,
   companyName,
   isLoggedIn,
+  isAll,
 }) => {
   const { removeCompanyModalOn } = useCategoryDetailHook(companyId);
+  const navigate = useNavigate();
   return (
     <div className={companyBar}>
-      <button className={companyBtn} key={companyId}>
+      <button
+        className={companyBtn}
+        key={companyId}
+        onClick={() => {
+          navigate(`/categories/${categoryPath}/${companyId}`);
+        }}
+      >
         {companyName}
       </button>
       {isLoggedIn && (
-        <button
+        <p
           className={deleteBtn}
           onClick={() => {
-            removeCompanyModalOn(companyId);
+            if (isAll) {
+              toast.error("전체 상품을 삭제할 수 없습니다.");
+            } else {
+              removeCompanyModalOn(companyId);
+            }
           }}
         >
           X
-        </button>
+        </p>
       )}
     </div>
   );
