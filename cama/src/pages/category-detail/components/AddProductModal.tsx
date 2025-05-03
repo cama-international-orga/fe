@@ -21,7 +21,7 @@ import { toast } from "sonner";
 
 export interface AddProductModalProps {
   categoryPath?: string;
-  companies: Company[]; // 회사 리스트 추가
+  companies?: Company[]; // 회사 리스트 추가
 }
 
 interface ProductInfo {
@@ -38,7 +38,7 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
   const [modelImages, setModelImages] = useState<File[]>([]);
   const [detailImages, setDetailImages] = useState<File[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>(
-    companies[0]?.companyId ?? ""
+    companies?.[0]?.companyId ?? ""
   );
 
   // InfoKey/Value 쌍 추가
@@ -112,7 +112,7 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
             onChange={(e) => setSelectedCompanyId(e.target.value)}
             required
           >
-            {companies.map((company) => (
+            {companies?.map((company) => (
               <option key={company.companyId} value={company.companyId}>
                 {company.companyName}
               </option>

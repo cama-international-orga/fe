@@ -18,7 +18,10 @@ const CompanyContainer: React.FC<CompanyProps> = ({
   isLoggedIn,
   isAll,
 }) => {
-  const { removeCompanyModalOn } = useCategoryDetailHook(companyId);
+  const { removeCompanyModalOn } = useCategoryDetailHook(
+    categoryPath,
+    companyId
+  );
   const navigate = useNavigate();
   return (
     <div className={companyBar}>
