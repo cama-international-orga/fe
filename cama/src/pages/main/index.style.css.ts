@@ -9,7 +9,16 @@ export const scrollContainer = style({
 export const pageContainer = style({
   width: "100%",
   height: "100vh",
-  scrollSnapAlign: "start", // 스크롤 스냅 포인트
+  scrollSnapAlign: "start",
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  overflow: "hidden",
+});
+
+export const lastPageContainer = style({
+  width: "100%",
   position: "relative",
   display: "flex",
   alignItems: "center",

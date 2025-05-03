@@ -8,11 +8,14 @@ import {
   activeDot,
 } from "./index.style.css";
 import { Page1, Page2, Page3, Page4, Page5 } from "./components";
+import { useState } from "react";
 
 const MainPage = () => {
   const totalPages = 5;
-  const { activePage, containerRef, scrollToPage } = useFullPageScroll({
+  const [activePage, setActivePage] = useState(0);
+  const { containerRef, scrollToPage } = useFullPageScroll({
     totalPages,
+    onPageChange: setActivePage,
   });
 
   return (
@@ -43,6 +46,7 @@ const MainPage = () => {
             }`}
             onClick={() => {
               scrollToPage(index);
+              setActivePage(index);
             }}
           />
         ))}
