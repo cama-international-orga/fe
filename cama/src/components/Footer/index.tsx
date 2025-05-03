@@ -9,8 +9,11 @@ import {
   categoryGrid,
   categoryItem,
 } from "./index.style.css";
-
+import { useAppHook } from "../../hooks/useAppHook";
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const { navItems } = useAppHook();
+  const navigate = useNavigate();
   return (
     <footer className={footer}>
       <div className={footerContainer}>
@@ -45,46 +48,20 @@ const Footer = () => {
           <div className={categorySection}>
             <h3>CATEGORIES</h3>
             <div className={categoryGrid}>
-              <div className={categoryItem}>
-                <h4>
-                  신제품 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
-              <div className={categoryItem}>
-                <h4>
-                  손잡이/도어락 <span>+</span>
-                </h4>
-              </div>
+              {navItems.map((category) => (
+                <div
+                  className={categoryItem}
+                  key={category.categoryId}
+                  onClick={() => {
+                    navigate(`/categories/${category.categoryPath}/0`);
+                  }}
+                >
+                  <h4>
+                    {category.categoryName}
+                    <span> + </span>
+                  </h4>
+                </div>
+              ))}
             </div>
           </div>
         </div>

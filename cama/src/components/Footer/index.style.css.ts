@@ -107,6 +107,7 @@ export const categoryGrid = style({
 
 export const categoryItem = style({
   borderBottom: "1px solid #333",
+  cursor: "pointer",
 });
 
 globalStyle(`${categoryItem} h4`, {

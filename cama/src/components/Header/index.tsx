@@ -19,6 +19,7 @@ import { AddCategoryModal } from "./components/AddCategoryModal.tsx";
 import DeleteModal from "../DeleteModal/index.tsx";
 import { HeaderNavItem } from "../../apis/main/type.ts";
 import { useHeaderHook } from "./hooks/useHeaderHook.ts";
+import { toast } from "sonner";
 export const Header: React.FC<{
   navItems: HeaderNavItem[];
   isLoggedIn: boolean;
@@ -41,7 +42,7 @@ export const Header: React.FC<{
                 <CategoryContainer
                   key={item.categoryId}
                   categoryName={item.categoryName}
-                  categoryPath={`/categories/${item.categoryPath}`}
+                  categoryPath={`/categories/${item.categoryPath}/0`}
                   isLast={false}
                   handleDelete={() => {
                     openModal({
@@ -50,6 +51,7 @@ export const Header: React.FC<{
                         handleDelete: async () => {
                           await handleDelete(item.categoryId);
                           closeAllModals();
+                          toast.success("카테고리가 삭제되었습니다.");
                           window.location.reload();
                         },
                         handleCancel: () => {
