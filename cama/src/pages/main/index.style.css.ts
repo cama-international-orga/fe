@@ -41,15 +41,19 @@ export const paginationDot = style({
   width: "12px",
   height: "12px",
   borderRadius: "50%",
-  backgroundColor: "rgba(255, 255, 255, 0.5)",
-  border: "1px solid black",
+  backgroundColor: "rgba(255, 255, 255, 0.3)",
+  border: "2px solid rgba(255, 255, 255, 0.5)",
   cursor: "pointer",
   transition: "all 0.3s ease",
+  margin: "8px 0",
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
 });
 
 export const activeDot = style({
-  backgroundColor: "white",
+  backgroundColor: "rgba(255, 255, 255, 0.9)",
+  border: "1px solid rgba(255, 255, 255, 0.5)",
   transform: "scale(1.2)",
+  boxShadow: "0 0 10px rgba(255, 255, 255, 0.5)",
 });
 
 export const mediaStyle = style({
