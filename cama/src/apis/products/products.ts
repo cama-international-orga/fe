@@ -2,11 +2,13 @@ import { publicInstance, privateInstance } from "../axios";
 import { CategoryDetail } from "./type";
 export const getProducts = async (
   categoryId: string,
-  companyId: string
+  companyId: string,
+  page: number
 ): Promise<CategoryDetail> => {
   const response = await publicInstance.get(
-    `/categories/${categoryId}/company/${companyId}`
+    `/categories/${categoryId}/company/${companyId}?page=${page}`
   );
+
   return response.data.data;
 };
 

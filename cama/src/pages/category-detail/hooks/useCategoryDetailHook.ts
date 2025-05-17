@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Products, Company } from "../../../apis/products/type";
 import {
   deleteCompany,
@@ -10,25 +10,34 @@ import AddCompanyModal from "../components/AddCompanyModal";
 import DeleteModal from "../../../components/DeleteModal";
 import { toast } from "sonner";
 import AddProductModal from "../components/AddProductModal";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
+  const [searchParams] = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+
   const [categoryThumbnail, setCategoryThumbnail] = useState<string>();
   const [companys, setCompanys] = useState<Company[]>([]);
   const [products, setProducts] = useState<Products[] | null>(null);
-
+  const [totalPages, setTotalPages] = useState(10);
+  const navigate = useNavigate();
   const { openModal, closeAllModals } = useModal();
-  // 최초 입력받은 category 값을 통해 API 호출로 최초 데이터 가져오기
-  useEffect(() => {
-    const fetchDefault = async () => {
-      const response = await getProducts(categoryPath, companyId);
-      console.log(response);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await getProducts(categoryPath, companyId, page);
       setCategoryThumbnail(response.thumbNail);
       setCompanys(response.companyLists);
       setProducts(response.productsLists);
-    };
+      setTotalPages(response.pageInfo.totalPages);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  }, [categoryPath, companyId, page]);
 
-    fetchDefault();
-  }, []);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const modifyThumbnail = (category: string, newThumbnail: string) => {
     console.log(category, newThumbnail);
@@ -104,6 +113,10 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     window.location.reload();
   };
 
+  const handlePageChange = (newPage: number) => {
+    navigate(`/categories/${categoryPath}/${companyId}?page=${newPage}`);
+  };
+
   return {
     categoryThumbnail,
     products,
@@ -115,6 +128,9 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     removeProductModalOn,
     addProduct,
     removeProduct,
+    page,
+    totalPages,
+    handlePageChange,
   };
 };
 

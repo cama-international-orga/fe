@@ -6,23 +6,23 @@ import {
   thumbnailContainer,
   companyBar,
   productContainer,
-  pageContainer,
-  pageButton,
   thumbnailModifyButton,
-  // productPlusButton,
+  addCompanyButton,
 } from "./index.style.css";
 import useCategoryDetailHook from "./hooks/useCategoryDetailHook";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductContainer from "./components/Product";
 import CompanyContainer from "./components/Company";
-import defaultImg from "../../assets/svg/default-img.svg";
+import plusIcon from "../../assets/svg/plus.svg";
 import { useModal } from "../../contexts";
 import AddProductModal from "./components/AddProductModal";
+import Footer from "../../components/Footer";
+import { PagenationButton } from "../../components/PagenationButton";
 // 썸네일 예비 이미지
-const DEFAULT_THUMBNAIL = defaultImg;
+const DEFAULT_THUMBNAIL = plusIcon;
 
 // 상품 예비 이미지
-const DEFAULT_PRODUCT_IMAGE = defaultImg;
+const DEFAULT_PRODUCT_IMAGE = plusIcon;
 
 function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { categoryPath, companyId } = useParams();
@@ -34,7 +34,9 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     removeProductModalOn,
     modifyThumbnail,
     addCompanyModalOn,
-    // addProduct,
+    page: currentPage,
+    totalPages,
+    handlePageChange,
   } = useCategoryDetailHook(
     categoryPath ? categoryPath : "0",
     companyId ? companyId : "0"
@@ -79,57 +81,84 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             isLoggedIn={isLoggedIn}
           />
         ))}
-        {isLoggedIn && <button onClick={addCompanyModalOn}>+</button>}
+        {isLoggedIn && (
+          <button className={addCompanyButton} onClick={addCompanyModalOn}>
+            +
+          </button>
+        )}
       </div>
 
       <div className={productContainer}>
         <div className={productGrid}>
-          {products?.map((product) => (
-            <ProductContainer
-              key={product.productsId}
-              productsId={product.productsId}
-              productsImage={product.productsImage || DEFAULT_PRODUCT_IMAGE}
-              productsName={product.productsName}
-              onRemove={removeProductModalOn}
-              onClick={() => {
-                navigate(`/products/${product.productsId}`);
-              }}
-              isLoggedIn={isLoggedIn}
-            />
-          ))}
-          <div style={{ textAlign: "center", width: "100%" }}>
-            <img
-              src={DEFAULT_PRODUCT_IMAGE}
-              alt="예비 상품"
-              style={{ width: 120, opacity: 0.5 }}
-            />
-            <div>등록된 상품이 없습니다.</div>
-            {isLoggedIn && (
-              <button
-                onClick={() =>
-                  openModal({
-                    component: AddProductModal,
-                    props: {
-                      categoryPath: categoryPath ? categoryPath : "0",
-                      companies: companys,
-                    },
-                  })
-                }
-              >
-                상품 추가
-              </button>
-            )}
-          </div>
+          {products && products.length > 0 ? (
+            <>
+              {products.map((product) => (
+                <ProductContainer
+                  key={product.productsId}
+                  productsId={product.productsId}
+                  productsImage={product.productsImage || DEFAULT_PRODUCT_IMAGE}
+                  productsName={product.productsName}
+                  onRemove={removeProductModalOn}
+                  onClick={() => {
+                    navigate(`/products/${product.productsId}`);
+                  }}
+                  isLoggedIn={isLoggedIn}
+                />
+              ))}
+              {isLoggedIn && (
+                <ProductContainer
+                  key={"add-product-key"}
+                  productsId={"0"}
+                  productsImage={DEFAULT_PRODUCT_IMAGE}
+                  productsName={"상품 추가"}
+                  onClick={() => {
+                    openModal({
+                      component: AddProductModal,
+                      props: {
+                        categoryPath: categoryPath ? categoryPath : "0",
+                        companies: companys,
+                      },
+                    });
+                  }}
+                  isLoggedIn={isLoggedIn}
+                />
+              )}
+            </>
+          ) : (
+            <div style={{ textAlign: "center", width: "100%" }}>
+              <img
+                src={DEFAULT_PRODUCT_IMAGE}
+                alt="예비 상품"
+                style={{ width: 120, opacity: 0.5 }}
+              />
+              <p style={{ marginTop: 10, fontSize: 16, color: "#666" }}>
+                등록된 상품이 없습니다.
+              </p>
+              {isLoggedIn && (
+                <button
+                  onClick={() =>
+                    openModal({
+                      component: AddProductModal,
+                      props: {
+                        categoryPath: categoryPath ? categoryPath : "0",
+                        companies: companys,
+                      },
+                    })
+                  }
+                >
+                  상품 추가
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
-
-      <div className={pageContainer}>
-        <button className={pageButton}>1</button>
-        <button className={pageButton}>2</button>
-        <button className={pageButton}>3</button>
-        <button className={pageButton}>4</button>
-        <button className={pageButton}>5</button>
-      </div>
+      <PagenationButton
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePageChange={handlePageChange}
+      />
+      <Footer />
     </div>
   );
 }

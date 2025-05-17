@@ -10,7 +10,7 @@ import {
 import { Products } from "../../../apis/products/type";
 
 interface ProductProps extends Products {
-  onRemove: (productId: string) => void;
+  onRemove?: (productId: string) => void;
   onClick: () => void;
   isLoggedIn: boolean;
 }
@@ -35,8 +35,11 @@ const ProductContainer: React.FC<ProductProps> = ({
       <img src={productsImage} alt={productsName} />
       <div className={`${overlay} ${hovered ? showOverlay : ""}`}>
         <div className={productNameContainer}>{productsName}</div>
-        {isLoggedIn && (
-          <button className={deleteBtn} onClick={() => onRemove(productsId)}>
+        {isLoggedIn && onRemove && (
+          <button
+            className={deleteBtn}
+            onClick={() => onRemove && onRemove(productsId)}
+          >
             X
           </button>
         )}

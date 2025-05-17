@@ -14,4 +14,7 @@ export interface CategoryDetail {
   thumbNail: string;
   companyLists: Company[];
   productsLists: Products[] | null;
+  pageInfo: {
+    totalPages: number;
+  };
 }

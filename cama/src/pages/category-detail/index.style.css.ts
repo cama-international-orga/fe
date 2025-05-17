@@ -1,4 +1,4 @@
-import { style, globalStyle } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 // 컨테이너 스타일
 export const container = style({
@@ -39,7 +39,7 @@ export const thumbnail = style({
 export const companyBar = style({
   display: "grid",
   gridTemplateColumns: "repeat(5, 1fr)",
-  gap: "10px",
+  gap: "0.1rem",
   marginTop: "20px",
   alignItems: "center",
   padding: "10px",
@@ -59,30 +59,22 @@ export const productContainer = style({
 // 제품 그리드 스타일 (4x2)
 export const productGrid = style({
   display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
-});
-
-export const pageContainer = style({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginTop: "20px",
-});
-
-export const pageButton = style({
-  padding: "8px 16px",
-  border: "1px solid #ddd",
-  background: "#ffffff",
-  cursor: "pointer",
-  transition: "background-color 0.3s",
-});
-
-globalStyle(`${pageButton}:hover`, {
-  background: "#ddd",
+  gridTemplateColumns: "repeat(5, 1fr)",
 });
 
 export const productPlusButton = style({
   padding: "8px 16px",
   border: "1px solid #ddd",
   background: "#ffffff",
+});
+
+export const addCompanyButton = style({
+  padding: "11px 0",
+  border: "none",
+  background: "gray",
+  color: "white",
+  fontSize: "1.1rem",
+  cursor: "pointer",
+  transition: "background 0.2s, color 0.2s",
+  textAlign: "center",
 });

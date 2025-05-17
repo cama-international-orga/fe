@@ -29,7 +29,7 @@ const CompanyContainer: React.FC<CompanyProps> = ({
         className={companyBtn}
         key={companyId}
         onClick={() => {
-          navigate(`/categories/${categoryPath}/${companyId}`);
+          navigate(`/categories/${categoryPath}/${companyId}?page=0`);
         }}
       >
         {companyName}
