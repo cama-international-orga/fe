@@ -8,7 +8,7 @@ import {
   ProductDetailPage,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { DUMMY_DATA } from "./pages/product-detail/constants/dummy";
+
 function App() {
   const { navItems, isLoggedIn } = useAppHook();
   return (
@@ -20,10 +20,7 @@ function App() {
           path="/categories/:categoryPath/:companyId"
           element={<CategoryDetailPage isLoggedIn={isLoggedIn} />}
         />
-        <Route
-          path="/products/:productId"
-          element={<ProductDetailPage data={DUMMY_DATA} />}
-        />
+        <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/admin" element={<AdminLoginPage />} />
       </Routes>
     </BrowserRouter>
