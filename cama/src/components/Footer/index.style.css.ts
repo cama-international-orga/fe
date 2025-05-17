@@ -6,6 +6,7 @@ export const footer = style({
   backgroundColor: "#1A1A1A",
   color: "#A9A9A9",
   padding: "60px 0 40px",
+
   fontFamily: "Arial, sans-serif",
 });
 
@@ -26,8 +27,19 @@ export const footerContent = style({
 
 // 로고 섹션 스타일
 export const footerLogo = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
   borderBottom: "1px solid #333",
   paddingBottom: "30px",
+});
+
+export const catalogDownload = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "start",
+  alignItems: "center",
+  gap: "20px",
 });
 
 // 글로벌 스타일 적용 (자식 요소 타겟팅)
@@ -40,7 +52,6 @@ globalStyle(`${footerLogo} h2`, {
 
 globalStyle(`${footerLogo} p`, {
   fontSize: "14px",
-  marginBottom: "20px",
 });
 
 globalStyle(`${footerLogo} button`, {

@@ -42,7 +42,7 @@ export const Header: React.FC<{
                 <CategoryContainer
                   key={item.categoryId}
                   categoryName={item.categoryName}
-                  categoryPath={`/categories/${item.categoryPath}/0`}
+                  categoryPath={`/categories/${item.categoryPath}/0?page=0`}
                   isLast={false}
                   handleDelete={() => {
                     openModal({

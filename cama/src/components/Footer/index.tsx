@@ -8,6 +8,7 @@ import {
   categorySection,
   categoryGrid,
   categoryItem,
+  catalogDownload,
 } from "./index.style.css";
 import { useAppHook } from "../../hooks/useAppHook";
 import { useNavigate } from "react-router-dom";
@@ -19,11 +20,13 @@ const Footer = () => {
       <div className={footerContainer}>
         <div className={footerLogo}>
           <h2>CAMA INTERNATIONAL</h2>
-          <p>
-            제품 구입 관련 문의는 온라인/오프라인 제품 리스트에이터에 메일링
-            문의해 주세요.
-          </p>
-          <button>카탈로그 다운로드</button>
+          <div className={catalogDownload}>
+            <p>
+              제품 구입 관련 문의는 온라인/오프라인 제품 리스트에이터에 메일링
+              문의해 주세요.
+            </p>
+            <button>카탈로그 다운로드</button>
+          </div>
         </div>
 
         <div className={footerContent}>
@@ -53,7 +56,7 @@ const Footer = () => {
                   className={categoryItem}
                   key={category.categoryId}
                   onClick={() => {
-                    navigate(`/categories/${category.categoryPath}/0`);
+                    navigate(`/categories/${category.categoryPath}/0?page=0`);
                   }}
                 >
                   <h4>
