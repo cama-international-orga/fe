@@ -1,3 +1,4 @@
+import useProductDetailHook from "./hooks/useProductDetailHook";
 import {
   wrapper,
   header,
@@ -13,33 +14,19 @@ import {
   detailImage,
   category,
 } from "./index.style.css";
+import { useParams } from "react-router-dom";
 
-interface ProductDetailPageProps {
-  data: {
-    categoryPath: string;
-    companyId: string;
-    model: {
-      productName: string;
-      modelImages: { modelImage: string }[];
-    };
-    information: { infoKey: string; infoValue: string }[];
-    detailImages: { detailImage: string }[];
-  };
-}
-
-const ProductDetailPage = ({
-  data,
-}: {
-  data: ProductDetailPageProps["data"];
-}) => {
+const ProductDetailPage = () => {
+  const { productId } = useParams();
+  const { productDetail } = useProductDetailHook(productId || "");
   return (
     <div className={wrapper}>
       <div className={header}>
-        <div className={category}>{data.categoryPath}</div>
+        <div className={category}>{productDetail?.categoryPath}</div>
       </div>
-      <h2 className={productName}>{data.model.productName}</h2>
+      <h2 className={productName}>{productDetail?.model.productName}</h2>
       <div className={modelImages}>
-        {data.model.modelImages.map((img, idx) => (
+        {productDetail?.model.modelImages.map((img, idx) => (
           <img
             key={idx}
             src={img.modelImage}
@@ -52,7 +39,7 @@ const ProductDetailPage = ({
         <h1>Information</h1>
         <table className={infoTable}>
           <tbody>
-            {data.information.map((info, idx) => (
+            {productDetail?.information.map((info, idx) => (
               <tr key={idx}>
                 <th className={infoTableTh}>{info.infoKey}</th>
                 <td className={infoTableTd}>{info.infoValue}</td>
@@ -61,19 +48,21 @@ const ProductDetailPage = ({
           </tbody>
         </table>
       </div>
-      <div className={detailImagesSection}>
-        <h3>상세 이미지</h3>
-        <div className={detailImages}>
-          {data.detailImages.map((img, idx) => (
-            <img
-              key={idx}
-              src={img.detailImage}
-              alt={`상세 이미지 ${idx + 1}`}
-              className={detailImage}
-            />
-          ))}
+      {productDetail?.detailImages.length && (
+        <div className={detailImagesSection}>
+          <h3>상세 이미지</h3>
+          <div className={detailImages}>
+            {productDetail?.detailImages.map((img, idx) => (
+              <img
+                key={idx}
+                src={img.detailImage}
+                alt={`상세 이미지 ${idx + 1}`}
+                className={detailImage}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
