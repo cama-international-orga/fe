@@ -3,18 +3,24 @@
  *  @author 홍규진
  */
 
-import React, { useState } from "react";
-import { input, addButton } from "./AddCompanyModal.style.css";
+import React, { useState, useRef } from "react";
 import { useModal } from "../../../contexts";
 import { addProduct } from "../../../apis/products/products";
 import {
   modalContainer,
   modalTitle,
+  modalDesc,
   infoLabel,
   infoContainer,
+  input,
   inputRow,
   infoAddButton,
+  fileInputWrapper,
+  fileInputBox,
+  fileInputLabel,
   fileInput,
+  fileInputButton,
+  addButton,
 } from "./AddProductModal.style.css";
 import { Company } from "../../../apis/products/type";
 import { toast } from "sonner";
@@ -40,6 +46,8 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>(
     companies?.[0]?.companyId ?? ""
   );
+  const modelInputRef = useRef<HTMLInputElement>(null);
+  const detailInputRef = useRef<HTMLInputElement>(null);
 
   // InfoKey/Value 쌍 추가
   const addInfo = () =>
@@ -103,15 +111,19 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
   return (
     <div className={modalContainer}>
       <h2 className={modalTitle}>상품 추가</h2>
+      <div className={modalDesc}>새로운 상품 정보를 입력하여 등록해주세요.</div>
       <form onSubmit={handleSubmit}>
         <div className={infoContainer}>
-          <label className={infoLabel}>회사명</label>
+          <label className={infoLabel}>카테고리 선택</label>
           <select
             className={input}
             value={selectedCompanyId}
             onChange={(e) => setSelectedCompanyId(e.target.value)}
             required
           >
+            <option value="" disabled>
+              카테고리를 선택해주세요
+            </option>
             {companies?.map((company) => (
               <option key={company.companyId} value={company.companyId}>
                 {company.companyName}
@@ -123,7 +135,7 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
           <label className={infoLabel}>제품명</label>
           <input
             type="text"
-            placeholder="제품명을 입력해주세요."
+            placeholder="제품명을 입력해주세요"
             className={input}
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
@@ -131,11 +143,12 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
           />
         </div>
         <div className={infoContainer}>
-          <label className={infoLabel}>제품 정보</label>
+          <label className={infoLabel}>추가 정보</label>
           {information.map((info, idx) => (
             <div key={idx} className={inputRow}>
               <input
-                placeholder="정보 명을 입력해주세요."
+                className={input}
+                placeholder="정보 명을 입력해주세요"
                 value={info.infoKey}
                 onChange={(e) =>
                   handleInfoChange(idx, "infoKey", e.target.value)
@@ -143,7 +156,8 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
                 required
               />
               <input
-                placeholder="정보 값을 입력해주세요."
+                className={input}
+                placeholder="정보 값을 입력해주세요"
                 value={info.infoValue}
                 onChange={(e) =>
                   handleInfoChange(idx, "infoValue", e.target.value)
@@ -154,6 +168,7 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
                 <button
                   type="button"
                   className={infoAddButton}
+                  style={{ maxWidth: 60, marginLeft: 4 }}
                   onClick={() => removeInfo(idx)}
                 >
                   삭제
@@ -162,31 +177,43 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
             </div>
           ))}
           <button type="button" className={infoAddButton} onClick={addInfo}>
-            정보 추가
+            <span style={{ fontSize: 18, marginRight: 6 }}>＋</span> 정보 추가
           </button>
         </div>
-        <div className={infoContainer}>
-          <label className={infoLabel}>모델 이미지</label>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            className={fileInput}
-            onChange={handleModelImages}
-          />
-        </div>
-        <div className={infoContainer}>
-          <label className={infoLabel}>상세 이미지</label>
-          <input
-            type="file"
-            multiple
-            accept="image/*"
-            className={fileInput}
-            onChange={handleDetailImages}
-          />
+        <div className={fileInputWrapper}>
+          <div className={fileInputBox}>
+            <div className={fileInputLabel}>대표 이미지</div>
+            <label className={fileInputButton} htmlFor="model-image-upload">
+              <span style={{ fontSize: 18, marginRight: 8 }}>📁</span> 파일 선택
+            </label>
+            <input
+              id="model-image-upload"
+              type="file"
+              multiple
+              accept="image/*"
+              className={fileInput}
+              ref={modelInputRef}
+              onChange={handleModelImages}
+            />
+          </div>
+          <div className={fileInputBox}>
+            <div className={fileInputLabel}>상세 이미지</div>
+            <label className={fileInputButton} htmlFor="detail-image-upload">
+              <span style={{ fontSize: 18, marginRight: 8 }}>📁</span> 파일 선택
+            </label>
+            <input
+              id="detail-image-upload"
+              type="file"
+              multiple
+              accept="image/*"
+              className={fileInput}
+              ref={detailInputRef}
+              onChange={handleDetailImages}
+            />
+          </div>
         </div>
         <button className={addButton} type="submit">
-          등록
+        등록
         </button>
       </form>
     </div>

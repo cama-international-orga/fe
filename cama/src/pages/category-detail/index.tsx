@@ -8,6 +8,7 @@ import {
   productContainer,
   thumbnailModifyButton,
   addCompanyButton,
+  productPlusButton,
 } from "./index.style.css";
 import useCategoryDetailHook from "./hooks/useCategoryDetailHook";
 import { useParams, useNavigate } from "react-router-dom";
@@ -106,22 +107,27 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 />
               ))}
               {isLoggedIn && (
-                <ProductContainer
-                  key={"add-product-key"}
-                  productsId={"0"}
-                  productsImage={DEFAULT_PRODUCT_IMAGE}
-                  productsName={"상품 추가"}
-                  onClick={() => {
-                    openModal({
-                      component: AddProductModal,
-                      props: {
-                        categoryPath: categoryPath ? categoryPath : "0",
-                        companies: companys,
-                      },
-                    });
-                  }}
-                  isLoggedIn={isLoggedIn}
-                />
+                <div
+                  style={{ textAlign: "center", width: "100%", marginTop: 24 }}
+                >
+                  <button
+                    className={productPlusButton}
+                    onClick={() =>
+                      openModal({
+                        component: AddProductModal,
+                        props: {
+                          categoryPath: categoryPath ? categoryPath : "0",
+                          companies: companys,
+                        },
+                      })
+                    }
+                  >
+                    +
+                  </button>
+                  <p style={{ marginTop: 10, fontSize: 16, color: "#666" }}>
+                    상품 추가하기
+                  </p>
+                </div>
               )}
             </>
           ) : (

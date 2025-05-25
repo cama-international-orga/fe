@@ -4,7 +4,14 @@
  */
 
 import { useState } from "react";
-import { input, addButton } from "./AddCompanyModal.style.css";
+import {
+  input,
+  addButton,
+  modalContainer,
+  modalTitle,
+  form,
+  infoLabel,
+} from "./AddCompanyModal.style.css";
 import { useModal } from "../../../contexts";
 import { addCompany } from "../../../apis/products/products";
 
@@ -16,8 +23,9 @@ const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
   const { closeAllModals } = useModal();
   const [companyName, setCompanyName] = useState("");
   return (
-    <div>
-      <h2>회사명 추가</h2>
+    <div className={modalContainer}>
+      <h2 className={modalTitle}>회사명 추가</h2>
+      <label className={infoLabel}>회사명</label>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -25,10 +33,11 @@ const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
           await addCompany(categoryPath ? categoryPath : "0", companyName);
           window.location.reload();
         }}
+        className={form}
       >
         <input
           type="text"
-          placeholder="회사명"
+          placeholder="회사명을 입력해주세요 예) 카마 인터내셔널"
           className={input}
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}

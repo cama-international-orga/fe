@@ -26,6 +26,5 @@ export const deleteBtn = style({
   position: "absolute",
   right: 1,
   color: "red",
-
   cursor: "pointer",
 });

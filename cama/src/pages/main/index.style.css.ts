@@ -4,12 +4,17 @@ export const scrollContainer = style({
   width: "100vw",
   height: "500vh",
   position: "relative",
+  scrollBehavior: "smooth",
+  overflowY: "auto",
+  overflowX: "hidden",
+  WebkitOverflowScrolling: "touch", // iOS 스크롤 부드럽게
 });
 
 export const pageContainer = style({
   width: "100%",
   height: "100vh",
   scrollSnapAlign: "start",
+  scrollSnapStop: "always",
   position: "relative",
   display: "flex",
   alignItems: "center",

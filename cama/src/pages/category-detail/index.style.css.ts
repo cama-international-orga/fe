@@ -56,25 +56,50 @@ export const productContainer = style({
   width: "100%",
 });
 
-// 제품 그리드 스타일 (4x2)
+// 제품 그리드 스타일 (5개씩)
 export const productGrid = style({
   display: "grid",
   gridTemplateColumns: "repeat(5, 1fr)",
 });
 
 export const productPlusButton = style({
-  padding: "8px 16px",
-  border: "1px solid #ddd",
-  background: "#ffffff",
+  width: "70%",
+  height: "70%",
+  borderRadius: "16px",
+  border: "2px dashed #bdbdbd",
+  background: "#f7f8fa",
+  color: "#bdbdbd",
+  fontSize: "3.2rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  margin: "0 auto",
+  transition: "background 0.2s, border 0.2s, color 0.2s",
+  selectors: {
+    "&:hover": {
+      background: "#eaf3fb",
+      border: "2px solid #3a90eb",
+      color: "#3a90eb",
+    },
+  },
 });
 
 export const addCompanyButton = style({
   padding: "11px 0",
-  border: "none",
-  background: "gray",
-  color: "white",
+  border: "1px dashed #bdbdbd",
+  background: "transparent",
+  color: "#bdbdbd",
   fontSize: "1.1rem",
   cursor: "pointer",
   transition: "background 0.2s, color 0.2s",
+  selectors: {
+    "&:hover": {
+      background: "#eaf3fb",
+      border: "1px solid #3a90eb",
+      color: "#3a90eb",
+    },
+  },
   textAlign: "center",
 });
