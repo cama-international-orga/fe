@@ -1,6 +1,7 @@
 // ProductsPage.tsx
 import {
   container,
+  cardContainer,
   thumbnail,
   productGrid,
   thumbnailContainer,
@@ -47,46 +48,50 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
   return (
     <div className={container}>
-      <div className={thumbnailContainer}>
-        <img
-          className={thumbnail}
-          src={categoryThumbnail || DEFAULT_THUMBNAIL}
-          alt="categoryThumbnail"
-        />
-        {isLoggedIn && (
-          <button
-            className={thumbnailModifyButton}
-            onClick={() =>
-              modifyThumbnail("all", "https://picsum.photos/200/300")
-            }
-          >
-            {categoryThumbnail ? "수정" : "이미지 추가"}
-          </button>
-        )}
-      </div>
-      <div className={companyBar}>
-        <CompanyContainer
-          key={"all-key"}
-          categoryPath={categoryPath ? categoryPath : "0"}
-          companyId={"0"}
-          companyName={"ALL"}
-          isLoggedIn={isLoggedIn}
-          isAll={true}
-        />
-        {companys?.map((company) => (
-          <CompanyContainer
-            key={company.companyId}
-            categoryPath={categoryPath ? categoryPath : "0"}
-            companyId={company.companyId}
-            companyName={company.companyName}
-            isLoggedIn={isLoggedIn}
+      <div className={cardContainer}>
+        <div className={thumbnailContainer}>
+          <img
+            className={thumbnail}
+            src={categoryThumbnail || DEFAULT_THUMBNAIL}
+            alt="categoryThumbnail"
           />
-        ))}
-        {isLoggedIn && (
-          <button className={addCompanyButton} onClick={addCompanyModalOn}>
-            +
-          </button>
-        )}
+          {isLoggedIn && (
+            <button
+              className={thumbnailModifyButton}
+              onClick={() =>
+                modifyThumbnail("all", "https://picsum.photos/200/300")
+              }
+            >
+              {categoryThumbnail ? "수정" : "이미지 추가"}
+            </button>
+          )}
+        </div>
+        <div className={companyBar}>
+          <CompanyContainer
+            key={"all-key"}
+            categoryPath={categoryPath ? categoryPath : "0"}
+            companyId={"0"}
+            companyName={"ALL"}
+            isLoggedIn={isLoggedIn}
+            isAll={true}
+            active={companyId === "0"}
+          />
+          {companys?.map((company) => (
+            <CompanyContainer
+              key={company.companyId}
+              categoryPath={categoryPath ? categoryPath : "0"}
+              companyId={company.companyId}
+              companyName={company.companyName}
+              isLoggedIn={isLoggedIn}
+              active={companyId === company.companyId}
+            />
+          ))}
+          {isLoggedIn && (
+            <button className={addCompanyButton} onClick={addCompanyModalOn}>
+              +
+            </button>
+          )}
+        </div>
       </div>
 
       <div className={productContainer}>
