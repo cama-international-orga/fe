@@ -1,6 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const modalContainer = style({
+  background: "#fff",
   borderRadius: "16px",
   padding: "32px 28px",
   boxShadow: "0 4px 32px rgba(0,0,0,0.12)",

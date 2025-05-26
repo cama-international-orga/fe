@@ -80,7 +80,7 @@ export const imageGuide = style({
 });
 
 export const input = style({
-  width: "100%",
+  width: "90%",
   padding: "14px 16px",
   border: "1.5px solid #e5e7eb",
   borderRadius: "10px",

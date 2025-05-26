@@ -9,6 +9,12 @@ import {
   deleteButton,
   cancelButton,
   modalContainer,
+  modalHeader,
+  closeBtn,
+  warningSection,
+  warningIcon,
+  warningTitle,
+  warningDesc,
 } from "./index.style.css";
 
 interface DeleteModalProps {
@@ -19,9 +25,19 @@ interface DeleteModalProps {
 const DeleteModal = ({ handleDelete, handleCancel }: DeleteModalProps) => {
   return (
     <div className={modalContainer}>
-      <h1>삭제</h1>
-      <p>정말 삭제하시겠습니까?</p>
-      <p>삭제 후 복구는 불가능합니다.</p>
+      <div className={modalHeader}>
+        삭제
+        <button className={closeBtn} onClick={handleCancel} aria-label="닫기">
+          ×
+        </button>
+      </div>
+      <div className={warningSection}>
+        <span className={warningIcon}>⚠️</span>
+        <div className={warningTitle}>정말로 삭제하시겠습니까?</div>
+        <div className={warningDesc}>
+          이 작업은 되돌릴 수 없습니다. 삭제시 데이터가 영구적으로 제거됩니다.
+        </div>
+      </div>
       <div className={buttonContainer}>
         <button className={cancelButton} onClick={handleCancel}>
           취소
