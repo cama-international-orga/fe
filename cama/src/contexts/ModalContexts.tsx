@@ -11,7 +11,7 @@ import ModalPortal from "./ModalPortal";
 // 모달 타입 정의
 export interface ModalProps {
   id: string;
-  component: React.ComponentType;
+  component: React.ComponentType<any>;
   props?: Record<string, unknown>;
 }
 

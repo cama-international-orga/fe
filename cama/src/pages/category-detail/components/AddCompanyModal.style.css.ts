@@ -69,6 +69,40 @@ export const imageInput = style({
   objectFit: "fill",
 });
 
+export const fileInput = style({
+  display: "none",
+});
+
+export const fileInputLabel = style({
+  width: "100%",
+  height: "120px",
+  border: "2px solid #e5e7eb",
+  background: "#f7f8fa",
+  color: "#888",
+
+  borderRadius: "10px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  marginBottom: "16px",
+  transition: "border-color 0.2s, background-color 0.2s",
+  selectors: {
+    "&:hover": {
+      borderColor: "#3a90eb",
+      backgroundColor: "#f8fafc",
+    },
+  },
+});
+
+export const imagePreview = style({
+  maxWidth: "100%",
+  maxHeight: "100%",
+  objectFit: "contain",
+  background: "#f7f8fa",
+  borderRadius: "8px",
+});
+
 export const addButton = style({
   width: "100%",
   background: "#222831",

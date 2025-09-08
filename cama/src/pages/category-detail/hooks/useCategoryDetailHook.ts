@@ -10,6 +10,8 @@ import AddCompanyModal from "../components/AddCompanyModal";
 import DeleteModal from "../../../components/DeleteModal";
 import { toast } from "sonner";
 import AddProductModal from "../components/AddProductModal";
+import EditProductModal from "../components/EditProductModal";
+import { getProduct } from "../../../apis/product-detail/product-detail";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
@@ -38,12 +40,6 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  const modifyThumbnail = (category: string, newThumbnail: string) => {
-    console.log(category, newThumbnail);
-    // API 호출 필요
-    // 모달 창 띄우기
-  };
 
   const addCompanyModalOn = () => {
     // API 호출 필요
@@ -100,6 +96,24 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     });
   };
 
+  const editProductModalOn = async (productId: string) => {
+    try {
+      const productDetail = await getProduct(productId);
+      openModal({
+        component: EditProductModal,
+        props: {
+          categoryPath: productDetail.categoryPath || categoryPath,
+          companies: companys,
+          productDetail,
+          productId,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+      toast.error("상품 상세 정보를 불러오지 못했습니다.");
+    }
+  };
+
   const addProduct = (newProduct: Products) => {
     console.log(newProduct);
     // API 호출 필요
@@ -121,9 +135,9 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     categoryThumbnail,
     products,
     companys,
-    modifyThumbnail,
     addCompanyModalOn,
     addProductModalOn,
+    editProductModalOn,
     removeCompanyModalOn,
     removeProductModalOn,
     addProduct,

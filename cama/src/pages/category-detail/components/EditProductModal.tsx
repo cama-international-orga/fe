@@ -1,11 +1,11 @@
 /**
- *  카테고리 추가 모달
+ *  상품 수정 모달
  *  @author 홍규진
  */
 
 import React, { useState, useRef } from "react";
 import { useModal } from "../../../contexts";
-import { addProduct } from "../../../apis/products/products";
+import { editProduct } from "../../../apis/products/products";
 import {
   modalContainer,
   modalTitle,
@@ -21,19 +21,23 @@ import {
   fileInput,
   fileInputButton,
   addButton,
+  buttonIcon,
   imagePreviewContainer,
   imagePreviewTitle,
   imagePreviewGrid,
   imagePreviewItem,
   imagePreview,
   imageRemoveButton,
-} from "./AddProductModal.style.css";
+} from "./EditProductModal.style.css";
 import { Company } from "../../../apis/products/type";
+import { ProductDetail } from "../../../apis/product-detail/type";
 import { toast } from "sonner";
 
-export interface AddProductModalProps {
+export interface EditProductModalProps {
   categoryPath?: string;
-  companies?: Company[]; // 회사 리스트 추가
+  companies?: Company[];
+  productDetail: ProductDetail;
+  productId: string;
 }
 
 interface ProductInfo {
@@ -41,16 +45,28 @@ interface ProductInfo {
   infoValue: string;
 }
 
-const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
+const EditProductModal = ({
+  categoryPath,
+  companies,
+  productDetail,
+  productId,
+}: EditProductModalProps) => {
   const { closeAllModals } = useModal();
-  const [productName, setProductName] = useState<string>("");
-  const [information, setInformation] = useState<ProductInfo[]>([
-    { infoKey: "", infoValue: "" },
-  ]);
+  const [productName, setProductName] = useState<string>(
+    productDetail?.model?.productName || ""
+  );
+  const [information, setInformation] = useState<ProductInfo[]>(
+    productDetail?.information?.length
+      ? productDetail.information.map((i) => ({
+          infoKey: i.infoKey,
+          infoValue: i.infoValue,
+        }))
+      : [{ infoKey: "", infoValue: "" }]
+  );
   const [modelImages, setModelImages] = useState<File[]>([]);
   const [detailImages, setDetailImages] = useState<File[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>(
-    companies?.[0]?.companyId ?? ""
+    productDetail?.companyId ?? companies?.[0]?.companyId ?? ""
   );
   const modelInputRef = useRef<HTMLInputElement>(null);
   const detailInputRef = useRef<HTMLInputElement>(null);
@@ -108,27 +124,28 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
     const formData = new FormData();
     formData.append("product", productBlob);
 
-    // 3. 이미지 파일들 추가
+    // 3. 이미지 파일들 추가 (새로 선택된 것만)
     modelImages.forEach((file) => formData.append("modelImages", file));
     detailImages.forEach((file) => formData.append("detailImages", file));
 
     // 4. 전송
-    await addProduct(
+    await editProduct(
       categoryPath ? categoryPath : "0",
       selectedCompanyId ? selectedCompanyId : "0",
+      productId,
       formData
     );
-    toast.success("상품이 등록되었습니다.");
-    window.location.reload();
+    toast.success("상품이 수정되었습니다.");
+    // window.location.reload();
   };
 
   return (
     <div className={modalContainer}>
-      <h2 className={modalTitle}>상품 추가</h2>
-      <div className={modalDesc}>새로운 상품 정보를 입력하여 등록해주세요.</div>
+      <h2 className={modalTitle}>상품 수정</h2>
+      <div className={modalDesc}>상품 정보를 수정해주세요.</div>
       <form onSubmit={handleSubmit}>
         <div className={infoContainer}>
-          <label className={infoLabel}>카테고리 선택</label>
+          <label className={infoLabel}>회사 선택</label>
           <select
             className={input}
             value={selectedCompanyId}
@@ -136,7 +153,7 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
             required
           >
             <option value="" disabled>
-              카테고리를 선택해주세요
+              회사를 선택해주세요
             </option>
             {companies?.map((company) => (
               <option key={company.companyId} value={company.companyId}>
@@ -191,14 +208,14 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
             </div>
           ))}
           <button type="button" className={infoAddButton} onClick={addInfo}>
-            <span>＋</span> 정보 추가
+            <span className={buttonIcon}>＋</span> 정보 추가
           </button>
         </div>
         <div className={fileInputWrapper}>
           <div className={fileInputBox}>
-            <div className={fileInputLabel}>대표 이미지</div>
+            <div className={fileInputLabel}>대표 이미지 (새로 선택)</div>
             <label className={fileInputButton} htmlFor="model-image-upload">
-              <span>📁</span> 파일 선택
+              <span className={buttonIcon}>📁</span> 파일 선택
             </label>
             <input
               id="model-image-upload"
@@ -209,7 +226,6 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
               ref={modelInputRef}
               onChange={handleModelImages}
             />
-            {/* 대표 이미지 미리보기 */}
             {modelImages.length > 0 && (
               <div className={imagePreviewContainer}>
                 <div className={imagePreviewTitle}>
@@ -237,9 +253,9 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
             )}
           </div>
           <div className={fileInputBox}>
-            <div className={fileInputLabel}>상세 이미지</div>
+            <div className={fileInputLabel}>상세 이미지 (새로 선택)</div>
             <label className={fileInputButton} htmlFor="detail-image-upload">
-              <span>📁</span> 파일 선택
+              <span className={buttonIcon}>📁</span> 파일 선택
             </label>
             <input
               id="detail-image-upload"
@@ -250,7 +266,6 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
               ref={detailInputRef}
               onChange={handleDetailImages}
             />
-            {/* 상세 이미지 미리보기 */}
             {detailImages.length > 0 && (
               <div className={imagePreviewContainer}>
                 <div className={imagePreviewTitle}>
@@ -279,11 +294,11 @@ const AddProductModal = ({ categoryPath, companies }: AddProductModalProps) => {
           </div>
         </div>
         <button className={addButton} type="submit">
-          등록
+          수정
         </button>
       </form>
     </div>
   );
 };
 
-export default AddProductModal;
+export default EditProductModal;

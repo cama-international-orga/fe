@@ -68,6 +68,14 @@ export const deleteBtn = style({
   },
 });
 
+// 수정 버튼 스타일
+export const editBtn = style({
+  position: "absolute",
+  background: "none",
+  top: "10px",
+  right: "40px",
+});
+
 export const productNameContainer = style({
   fontSize: "1.3rem",
   fontWeight: 700,

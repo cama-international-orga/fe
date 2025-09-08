@@ -50,7 +50,6 @@ export const input = style({
   borderRadius: "10px",
   background: "#f7f8fa",
   fontSize: "1rem",
-
   outline: "none",
   transition: "border 0.2s",
   selectors: {
@@ -101,13 +100,12 @@ export const fileInputWrapper = style({
 export const fileInputBox = style({
   flex: 1,
   display: "flex",
-
   flexDirection: "column",
   alignItems: "center",
   background: "#f7f8fa",
   border: "1.5px solid #e5e7eb",
   borderRadius: "10px",
-  padding: "18px",
+  padding: "18px 0 12px 0",
 });
 
 export const fileInputLabel = style({
@@ -160,6 +158,13 @@ export const addButton = style({
       background: "#3a90eb",
     },
   },
+});
+
+// Child element styles (vanilla-extract does not allow "& span" selectors)
+export const buttonIcon = style({
+  fontSize: "18px",
+  lineHeight: 1,
+  display: "inline-block",
 });
 
 // 이미지 미리보기 관련 스타일

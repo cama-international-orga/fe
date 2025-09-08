@@ -7,7 +7,6 @@ import {
   thumbnailContainer,
   companyBar,
   productContainer,
-  thumbnailModifyButton,
   addCompanyButton,
   productPlusButton,
 } from "./index.style.css";
@@ -20,8 +19,6 @@ import { useModal } from "../../contexts";
 import AddProductModal from "./components/AddProductModal";
 import Footer from "../../components/Footer";
 import { PagenationButton } from "../../components/PagenationButton";
-// 썸네일 예비 이미지
-const DEFAULT_THUMBNAIL = plusIcon;
 
 // 상품 예비 이미지
 const DEFAULT_PRODUCT_IMAGE = plusIcon;
@@ -34,8 +31,8 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     companys,
     products,
     removeProductModalOn,
-    modifyThumbnail,
     addCompanyModalOn,
+    editProductModalOn,
     page: currentPage,
     totalPages,
     handlePageChange,
@@ -52,19 +49,9 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={thumbnailContainer}>
           <img
             className={thumbnail}
-            src={categoryThumbnail || DEFAULT_THUMBNAIL}
+            src={categoryThumbnail}
             alt="categoryThumbnail"
           />
-          {isLoggedIn && (
-            <button
-              className={thumbnailModifyButton}
-              onClick={() =>
-                modifyThumbnail("all", "https://picsum.photos/200/300")
-              }
-            >
-              {categoryThumbnail ? "수정" : "이미지 추가"}
-            </button>
-          )}
         </div>
         <div className={companyBar}>
           <CompanyContainer
@@ -104,6 +91,7 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                   productsId={product.productsId}
                   productsImage={product.productsImage || DEFAULT_PRODUCT_IMAGE}
                   productsName={product.productsName}
+                  onEdit={editProductModalOn}
                   onRemove={removeProductModalOn}
                   onClick={() => {
                     navigate(`/products/${product.productsId}`);

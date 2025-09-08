@@ -44,7 +44,7 @@ export const modelImages = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  width: "100%",
+  width: "70%",
   gap: "12px",
   marginBottom: "24px",
 });
@@ -52,27 +52,33 @@ export const modelImages = style({
 export const modelImage = style({
   width: "60%",
   objectFit: "cover",
-  borderRadius: "8px",
   border: "1px solid #eee",
   background: "#fafafa",
 });
-
+  
 export const infoSection = style({
   marginBottom: "28px",
 });
 
+export const infoTitle = style({
+  color: "#5b9bd5",
+  fontSize: "1.5rem",
+  fontWeight: "700",
+  textAlign: "center",
+  marginBottom: "20px",
+});
+
 export const infoTable = style({
   width: "100%",
-  border: "1px solid #eee",
   marginTop: "8px",
 });
 
 export const infoTableTh = style({
-  background: "#f5f5f5",
   color: "#333",
-  fontWeight: "500",
-  padding: "8px 12px",
-  textAlign: "left",
+  fontWeight: "900",
+  padding: "4px 8px",
+
+  textAlign: "center",
   width: "120px",
 });
 
@@ -82,20 +88,32 @@ export const infoTableTd = style({
 });
 
 export const detailImagesSection = style({
+  width: "50%",
   marginTop: "24px",
 });
 
+export const detailImagesTitle = style({
+  color: "#5b9bd5",
+  fontSize: "1.5rem",
+  fontWeight: "700",
+  textAlign: "center",
+  marginBottom: "20px",
+});
+
 export const detailImages = style({
-  display: "flex",
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gridTemplateRows: "1fr 1fr",
   gap: "12px",
-  flexWrap: "wrap",
+  width: "100%",
+  aspectRatio: "1",
 });
 
 export const detailImage = style({
-  width: "120px",
-  height: "120px",
+  width: "100%",
+  height: "100%",
   objectFit: "cover",
-  borderRadius: "8px",
+
   border: "1px solid #eee",
   background: "#fafafa",
 });
