@@ -1,6 +1,7 @@
 export interface ProductDetail {
   categoryPath: string;
   companyId: string;
+  companyImage: string;
   model: {
     productName: string;
     modelImages: {

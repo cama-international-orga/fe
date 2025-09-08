@@ -18,3 +18,9 @@ export interface CategoryDetail {
     totalPages: number;
   };
 }
+
+export interface ProductDetail {
+  productsId: string;
+  productsImage: string;
+  productsName: string;
+}

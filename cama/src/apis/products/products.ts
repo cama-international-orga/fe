@@ -23,17 +23,49 @@ export const addProduct = async (
   );
 };
 
+export const editProduct = async (
+  categoryPath: string,
+  companyId: string,
+  productId: string,
+  formData: FormData
+): Promise<void> => {
+  await privateInstance.patch(
+    `/products/${categoryPath}/${companyId}/${productId}`,
+    formData
+  );
+};
+
 export const deleteProduct = async (productId: string): Promise<void> => {
   await privateInstance.delete(`/products/${productId}`);
 };
 
 export const addCompany = async (
   categoryPath: string,
-  companyName: string
+  companyName: string,
+  companyLogo?: File
 ): Promise<void> => {
-  await privateInstance.post(`/categories/${categoryPath}/company`, {
-    companyName,
+  const formData = new FormData();
+
+  // JSON 데이터를 문자열로 변환하여 FormData에 추가
+  const companyData = {
+    companyName: companyName,
+  };
+
+  // JSON 데이터를 Blob으로 변환하고 Content-Type 힌트 추가
+  const companyBlob = new Blob([JSON.stringify(companyData)], {
+    type: "application/json",
   });
+
+  // Blob을 FormData에 추가
+  formData.append("name", companyBlob);
+
+  // 파일 추가
+  if (companyLogo) {
+    formData.append("image", companyLogo);
+  }
+
+  // multipart/form-data는 자동으로 설정됨
+  await privateInstance.post(`/categories/${categoryPath}/company`, formData);
 };
 
 export const deleteCompany = async (

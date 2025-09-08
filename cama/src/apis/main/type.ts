@@ -2,7 +2,14 @@ export interface HeaderNavItem {
   categoryId: string;
   categoryName: string;
   categoryPath?: string;
-  thumbNail: File | null;
+  thumbNail: File | null | string;
+}
+
+export interface CategoryEditItem {
+  categoryName: string;
+  categoryPath: string;
+  categoryBeforePath: string | undefined;
+  thumbNail: File | null | string;
 }
 
 export interface CategoryContainerProps {
@@ -12,4 +19,5 @@ export interface CategoryContainerProps {
   onClickLast?: () => void;
   handleDelete?: () => void;
   isLoggedIn: boolean;
+  handleEdit?: () => void;
 }
