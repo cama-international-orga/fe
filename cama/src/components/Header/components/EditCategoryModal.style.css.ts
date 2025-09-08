@@ -3,6 +3,8 @@ import { style } from "@vanilla-extract/css";
 export const modalContainer = style({
   background: "#fff",
   borderRadius: "16px",
+  maxHeight: "90vh",
+  overflowY: "auto",
   padding: "32px 28px 28px 28px",
   boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
   margin: "0 auto",
@@ -80,9 +82,8 @@ export const imageGuide = style({
 });
 
 export const input = style({
-  width: "100%",
+  width: "90%",
   padding: "14px 16px",
-  boxSizing: "border-box",
   border: "1.5px solid #e5e7eb",
   borderRadius: "10px",
   background: "#f7f8fa",
@@ -120,6 +121,54 @@ export const addButton = style({
   selectors: {
     "&:hover": {
       background: "#3a90eb",
+    },
+  },
+});
+
+// 수정 모달 전용 스타일
+export const currentImageContainer = style({
+  width: "100%",
+  marginBottom: "16px",
+  padding: "16px",
+  boxSizing: "border-box",
+  border: "1px solid #e5e7eb",
+  borderRadius: "10px",
+  background: "#f8f9fa",
+});
+
+export const currentImageLabel = style({
+  fontSize: "0.9rem",
+  fontWeight: 600,
+  color: "#666",
+  marginBottom: "8px",
+  textAlign: "left",
+});
+
+export const currentImage = style({
+  width: "100%",
+  maxWidth: "420px",
+  height: "120px",
+  objectFit: "cover",
+  borderRadius: "8px",
+  background: "#f7f8fa",
+  border: "1px solid #e5e7eb",
+  marginBottom: "12px",
+});
+
+export const imageChangeButton = style({
+  background: "#f8f9fa",
+  color: "#3a90eb",
+  border: "1px solid #3a90eb",
+  borderRadius: "6px",
+  padding: "8px 16px",
+  fontSize: "0.9rem",
+  fontWeight: 600,
+  cursor: "pointer",
+  transition: "all 0.2s",
+  selectors: {
+    "&:hover": {
+      background: "#3a90eb",
+      color: "#fff",
     },
   },
 });

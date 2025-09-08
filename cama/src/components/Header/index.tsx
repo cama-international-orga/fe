@@ -20,6 +20,7 @@ import DeleteModal from "../DeleteModal/index.tsx";
 import { HeaderNavItem } from "../../apis/main/type.ts";
 import { useHeaderHook } from "./hooks/useHeaderHook.ts";
 import { toast } from "sonner";
+import { EditCategoryModal } from "./components/EditCategoryModal.tsx";
 export const Header: React.FC<{
   navItems: HeaderNavItem[];
   isLoggedIn: boolean;
@@ -58,6 +59,12 @@ export const Header: React.FC<{
                           closeAllModals();
                         },
                       },
+                    });
+                  }}
+                  handleEdit={() => {
+                    openModal({
+                      component: EditCategoryModal as React.ComponentType<any>,
+                      props: { category: item },
                     });
                   }}
                   isLoggedIn={isLoggedIn}

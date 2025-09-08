@@ -24,15 +24,47 @@ export const navItem = style({
 
 export const deleteButton = style({
   position: "absolute", // display가 아니라 position!
-  top: "-10px",
-  right: "-10px",
-  width: "1rem",
-  height: "1rem",
+  top: "-12px",
+  right: "-12px",
+  width: "24px",
+  height: "24px",
   backgroundColor: "transparent",
   border: "none",
   transition: "background-color 0.2s",
   color: "red",
   cursor: "pointer",
-  fontSize: "1.2rem",
+  fontSize: "14px",
   zIndex: 1, // 필요하다면 추가
+});
+
+export const editButton = style({
+  position: "absolute",
+  top: "-12px",
+  right: "4px", // 삭제 버튼과 겹치지 않도록
+  width: "24px",
+  height: "24px",
+  backgroundColor: "transparent",
+  border: "none",
+  transition: "background-color 0.2s",
+  color: "#3a90eb",
+  cursor: "pointer",
+  fontSize: "1rem",
+  zIndex: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  selectors: {
+    "&:hover": {
+      color: "#2563eb",
+    },
+  },
+});
+
+export const buttonContainer = style({
+  position: "absolute",
+
+  right: "0px",
+  display: "flex",
+  gap: "8px",
+  zIndex: 1,
 });
