@@ -9,7 +9,6 @@ export interface Company {
   companyName: string;
 }
 
-//TODO-[productLists] 추후 수정 필요
 export interface CategoryDetail {
   thumbNail: string;
   companyLists: Company[];
@@ -17,6 +16,23 @@ export interface CategoryDetail {
   pageInfo: {
     totalPages: number;
   };
+}
+
+export interface CategoryProduct {
+  companyId: string;
+  companyName: string;
+  productsId: string;
+  productsName: string;
+  productsImage: string;
+  productWeight: number;
+}
+export interface UpdateSortWeights {
+  productId: string;
+  productWeight: number;
+}
+
+export interface ProductsSort {
+  updateSortWeights: UpdateSortWeights[];
 }
 
 export interface ProductDetail {

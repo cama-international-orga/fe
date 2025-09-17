@@ -1,6 +1,7 @@
 import { publicInstance, privateInstance } from "../axios";
-import { CategoryDetail } from "./type";
-export const getProducts = async (
+import { CategoryDetail, CategoryProduct, ProductsSort } from "./type";
+
+export const getProductsByCategoryByCompany = async (
   categoryId: string,
   companyId: string,
   page: number
@@ -10,6 +11,20 @@ export const getProducts = async (
   );
 
   return response.data.data;
+};
+
+export const getProductsByCategory = async (
+  categoryPath: string
+): Promise<CategoryProduct[]> => {
+  const response = await privateInstance.get(`/categories/${categoryPath}`);
+
+  return response.data.data.productAllLists;
+};
+
+export const postProductsSort = async (
+  sortProducts: ProductsSort
+): Promise<void> => {
+  await privateInstance.patch(`/products/sort`, sortProducts);
 };
 
 export const addProduct = async (
