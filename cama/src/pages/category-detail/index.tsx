@@ -9,6 +9,8 @@ import {
   productContainer,
   addCompanyButton,
   productPlusButton,
+  productSortContainer,
+  productFlexContainer,
 } from "./index.style.css";
 import useCategoryDetailHook from "./hooks/useCategoryDetailHook";
 import { useParams, useNavigate } from "react-router-dom";
@@ -33,6 +35,7 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     removeProductModalOn,
     addCompanyModalOn,
     editProductModalOn,
+    productSortModalOn,
     page: currentPage,
     totalPages,
     handlePageChange,
@@ -80,6 +83,36 @@ function CategoryDetailPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           )}
         </div>
       </div>
+
+      {isLoggedIn && (
+        <div className={productSortContainer}>
+          <div className={productFlexContainer} />
+          <button
+            onClick={productSortModalOn}
+            style={{
+              padding: "8px 16px",
+              background: "#f7f8fa",
+              border: "1.5px solid #e5e7eb",
+              borderRadius: "8px",
+              fontSize: "14px",
+              fontWeight: 600,
+              color: "#3a90eb",
+              cursor: "pointer",
+              transition: "all 0.2s",
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = "#eaf3fb";
+              e.currentTarget.style.border = "1.5px solid #3a90eb";
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = "#f7f8fa";
+              e.currentTarget.style.border = "1.5px solid #e5e7eb";
+            }}
+          >
+            정렬 설정
+          </button>
+        </div>
+      )}
 
       <div className={productContainer}>
         <div className={productGrid}>

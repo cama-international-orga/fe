@@ -191,3 +191,20 @@ export const productPlusButton = style({
     },
   },
 });
+
+export const productFlexContainer = style({
+  flex: 1,
+});
+
+// 상품 정렬 컨테이너
+export const productSortContainer = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: "1200px",
+  minWidth: "340px",
+  marginTop: "24px",
+  background: "#fff",
+  borderRadius: "16px",
+});

@@ -1,9 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
-import { Products, Company } from "../../../apis/products/type";
+import {
+  Products,
+  Company,
+  CategoryProduct,
+} from "../../../apis/products/type";
 import {
   deleteCompany,
-  getProducts,
   deleteProduct,
+  getProductsByCategoryByCompany,
+  getProductsByCategory,
 } from "../../../apis/products/products";
 import { useModal } from "../../../contexts";
 import AddCompanyModal from "../components/AddCompanyModal";
@@ -11,6 +16,7 @@ import DeleteModal from "../../../components/DeleteModal";
 import { toast } from "sonner";
 import AddProductModal from "../components/AddProductModal";
 import EditProductModal from "../components/EditProductModal";
+import ProductSortModal from "../components/ProductSortModal";
 import { getProduct } from "../../../apis/product-detail/product-detail";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -21,17 +27,24 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
   const [categoryThumbnail, setCategoryThumbnail] = useState<string>();
   const [companys, setCompanys] = useState<Company[]>([]);
   const [products, setProducts] = useState<Products[] | null>(null);
+  const [sortingProducts, setSortingProducts] = useState<CategoryProduct[]>([]);
   const [totalPages, setTotalPages] = useState(10);
   const navigate = useNavigate();
   const { openModal, closeAllModals } = useModal();
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await getProducts(categoryPath, companyId, page);
-      setCategoryThumbnail(response.thumbNail);
-      setCompanys(response.companyLists);
-      setProducts(response.productsLists);
-      setTotalPages(response.pageInfo.totalPages);
+      const productsByCompany = await getProductsByCategoryByCompany(
+        categoryPath,
+        companyId,
+        page
+      );
+      const sortingProducts = await getProductsByCategory(categoryPath);
+      setCategoryThumbnail(productsByCompany.thumbNail);
+      setCompanys(productsByCompany.companyLists);
+      setProducts(productsByCompany.productsLists);
+      setTotalPages(productsByCompany.pageInfo.totalPages);
+      setSortingProducts(sortingProducts);
     } catch (error) {
       console.error("Failed to fetch data:", error);
     }
@@ -131,6 +144,15 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     navigate(`/categories/${categoryPath}/${companyId}?page=${newPage}`);
   };
 
+  const productSortModalOn = () => {
+    openModal({
+      component: ProductSortModal,
+      props: {
+        products: sortingProducts || [],
+      },
+    });
+  };
+
   return {
     categoryThumbnail,
     products,
@@ -138,6 +160,7 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     addCompanyModalOn,
     addProductModalOn,
     editProductModalOn,
+    productSortModalOn,
     removeCompanyModalOn,
     removeProductModalOn,
     addProduct,
