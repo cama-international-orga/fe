@@ -47,7 +47,6 @@ privateInstance.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => response,
   async (error: AxiosError): Promise<AxiosResponse> => {
     const originalRequest = error.config as CustomAxiosRequestConfig;
-    toast.error("🚨어드민 권한 경고", { description: error.message });
 
     // 재시도 여부 확인
     if (error.response?.status !== 401 || originalRequest._retry) {
@@ -81,8 +80,8 @@ privateInstance.interceptors.response.use(
       return privateInstance(originalRequest);
     } catch (refreshError) {
       localStorage.removeItem("accessToken");
-      console.error("🚨어드민 기능 경고:", refreshError);
-      // window.location.href = '/';
+      toast.error("🚨 세션이 만료되었습니다. 다시 로그인해 주세요.");
+      window.location.href = "/admin";
       return Promise.reject(refreshError);
     }
   }

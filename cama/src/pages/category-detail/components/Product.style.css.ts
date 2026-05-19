@@ -1,83 +1,99 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 
-// 제품 아이템 스타일
+export const card = style({
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+});
+
 export const productItem = style({
-  position: "relative",
-  padding: "0",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  overflow: "hidden",
-  cursor: "pointer",
-  background: "#fff",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-  transition: "box-shadow 0.2s",
-  ":hover": {
-    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
-  },
+    position: "relative",
+    border: "1px solid #e0e0e0",
+    padding: "0",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    overflow: "hidden",
+    cursor: "pointer",
+    background: "#fff",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+    transition: "box-shadow 0.2s, border-color 0.2s",
+
+    ":hover": {
+        boxShadow: "0 4px 14px rgba(0,0,0,0.12)",
+        borderColor: "#c0c0c0",
+    },
 });
 
-// 이미지 스타일
 globalStyle(`${productItem} img`, {
-  width: "100%",
-  aspectRatio: "1/1",
-  height: "auto",
-  objectFit: "cover",
+    width: "100%",
+    aspectRatio: "1/1",
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
 });
 
-// 오버레이(상품명+삭제) 스타일
 export const overlay = style({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  background: "rgba(0,0,0,0.55)",
-  color: "#fff",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  opacity: 0,
-  transition: "opacity 0.2s",
-  zIndex: 2,
-  fontSize: "1.1rem",
-  fontWeight: 500,
-  pointerEvents: "none",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.48)",
+    color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0,
+    transition: "opacity 0.2s",
+    zIndex: 2,
+    fontSize: "0.95rem",
+    fontWeight: 500,
+    pointerEvents: "none",
 });
 
 export const showOverlay = style({
-  opacity: 1,
-  pointerEvents: "auto",
+    opacity: 1,
+    pointerEvents: "auto",
 });
 
-// 삭제 버튼 스타일
 export const deleteBtn = style({
-  color: "red",
-  border: "none",
-  background: "none",
-  position: "absolute",
-  top: "10px",
-  right: "10px",
-  fontSize: "1.3rem",
-  fontWeight: 700,
-  cursor: "pointer",
-  transition: "background 0.2s, color 0.2s",
-  ":hover": {
-    color: "#b30000",
-  },
+    color: "red",
+    border: "none",
+    background: "none",
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    fontSize: "1.2rem",
+    fontWeight: 700,
+    cursor: "pointer",
+    transition: "color 0.2s",
+    ":hover": {
+        color: "#b30000",
+    },
 });
 
-// 수정 버튼 스타일
 export const editBtn = style({
-  position: "absolute",
-  background: "none",
-  top: "10px",
-  right: "40px",
+    position: "absolute",
+    background: "none",
+    top: "10px",
+    right: "40px",
 });
 
 export const productNameContainer = style({
-  fontSize: "1.3rem",
-  fontWeight: 700,
-  color: "#fff",
+    fontSize: "clamp(0.72rem, 0.8vw, 0.825rem)",
+    fontWeight: 600,
+    color: "#444",
+    letterSpacing: "0.2px",
+    paddingLeft: "2px",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+
+    "@media": {
+        "(max-width: 767px)": {
+            fontSize: "0.72rem",
+        },
+    },
 });

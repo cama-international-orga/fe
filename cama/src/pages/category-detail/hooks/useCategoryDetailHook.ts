@@ -20,11 +20,11 @@ import ProductSortModal from "../components/ProductSortModal";
 import { getProduct } from "../../../apis/product-detail/product-detail";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
+const useCategoryDetailHook = (categoryPath: string, categoryDetailId: string, companyId: string, isLoggedIn: boolean) => {
   const [searchParams] = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
 
-  const [categoryThumbnail, setCategoryThumbnail] = useState<string>();
+  //const [categoryThumbnail, setCategoryThumbnail] = useState<string>();
   const [companys, setCompanys] = useState<Company[]>([]);
   const [products, setProducts] = useState<Products[] | null>(null);
   const [sortingProducts, setSortingProducts] = useState<CategoryProduct[]>([]);
@@ -36,19 +36,26 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     try {
       const productsByCompany = await getProductsByCategoryByCompany(
         categoryPath,
+        categoryDetailId,
         companyId,
         page
       );
-      const sortingProducts = await getProductsByCategory(categoryPath);
-      setCategoryThumbnail(productsByCompany.thumbNail);
+
+      if (isLoggedIn) {
+        const sortingProducts = await getProductsByCategory(categoryPath, categoryDetailId);
+        setSortingProducts(sortingProducts);
+      }
+
+      //const sortingProducts = await getProductsByCategory(categoryPath);
+      //setCategoryThumbnail(productsByCompany.thumbNail);
       setCompanys(productsByCompany.companyLists);
       setProducts(productsByCompany.productsLists);
       setTotalPages(productsByCompany.pageInfo.totalPages);
-      setSortingProducts(sortingProducts);
+      //setSortingProducts(sortingProducts);
     } catch (error) {
       console.error("Failed to fetch data:", error);
     }
-  }, [categoryPath, companyId, page]);
+  }, [categoryPath, companyId, page, isLoggedIn, categoryDetailId]);
 
   useEffect(() => {
     fetchData();
@@ -59,7 +66,7 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
     // 모달 창 띄우기
     openModal({
       component: AddCompanyModal,
-      props: { categoryPath: categoryPath },
+      props: { categoryPath: categoryPath , categoryDetailId: categoryDetailId },
     });
   };
 
@@ -118,7 +125,7 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
           categoryPath: productDetail.categoryPath || categoryPath,
           companies: companys,
           productDetail,
-          productId,
+          productId
         },
       });
     } catch (e) {
@@ -154,7 +161,6 @@ const useCategoryDetailHook = (categoryPath: string, companyId: string) => {
   };
 
   return {
-    categoryThumbnail,
     products,
     companys,
     addCompanyModalOn,

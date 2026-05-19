@@ -31,7 +31,7 @@ const TrueFocus: React.FC<TrueFocusProps> = ({
   const words = sentence.split(" ");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null);
-  const containerRef: RefObject<HTMLDivElement | null> = useRef(null);
+  const containerRef: RefObject<HTMLDivElement> = useRef(null);
   const wordRefs: React.MutableRefObject<(HTMLSpanElement | null)[]> = useRef(
     []
   );

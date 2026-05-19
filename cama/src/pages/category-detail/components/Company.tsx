@@ -1,38 +1,54 @@
 // Company.tsx
 import React from "react";
-import { Company } from "../../../apis/products/type";
-import { companyBtn, companyBtnInactive, deleteBtn } from "./Company.style.css";
+import {Company} from "../../../apis/products/type";
+import { companyBtn, companyBtnInactive, deleteBtn} from "./Company.style.css";
 import useCategoryDetailHook from "../hooks/useCategoryDetailHook";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import {toast} from "sonner";
+import {useNavigate} from "react-router-dom";
+//import {productItem} from "./Product.style.css.ts";
 
 export interface CompanyProps extends Company {
-  categoryPath: string;
-  isLoggedIn: boolean;
-  isAll?: boolean;
-  active?: boolean;
+    categoryPath: string;
+    categoryDetailId: string;
+    categoryDetailName: string;
+    isLoggedIn: boolean;
+    isAll?: boolean;
+    active?: boolean;
+    //onClick: () => void;
 }
+
+
 const CompanyContainer: React.FC<CompanyProps> = ({
-  categoryPath,
-  companyId,
-  companyName,
-  isLoggedIn,
-  isAll,
-  active,
-}) => {
-  const { removeCompanyModalOn } = useCategoryDetailHook(
-    categoryPath,
-    companyId
-  );
-  const navigate = useNavigate();
-  return (
-    <button
-      className={active ? companyBtn : companyBtnInactive}
-      key={companyId}
-      onClick={() => {
-        navigate(`/categories/${categoryPath}/${companyId}?page=0`);
-      }}
-      style={{ display: "flex", alignItems: "center", gap: 4 }}
+                                                      categoryPath,
+                                                      categoryDetailId,
+                                                      companyId,
+                                                      companyName,
+                                                      categoryDetailName,
+                                                      isLoggedIn,
+                                                      isAll,
+                                                      active,
+                                                  }) => {
+    const {removeCompanyModalOn} = useCategoryDetailHook(
+        categoryPath,
+        categoryDetailId,
+        companyId,
+        isLoggedIn,
+    );
+    const navigate = useNavigate();
+    //const [hovered, setHovered] = useState(false);
+    //console.log(categoryDetailName);
+    return (
+        <button
+          className={active ? companyBtn : companyBtnInactive}
+          key={companyId}
+          onClick={() => {
+            navigate(`/categories/${categoryPath}/detail/${categoryDetailId}/company/${companyId}?page=0`,{
+                state: {
+                    categoryDetailName: categoryDetailName,
+                }
+            });
+          }}
+          style={{ display: "flex", alignItems: "center", gap: 4 }}
     >
       {companyName}
       {isLoggedIn && (
@@ -51,7 +67,7 @@ const CompanyContainer: React.FC<CompanyProps> = ({
         </span>
       )}
     </button>
-  );
+);
 };
 
 export default CompanyContainer;

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { mediaStyle, textLayer } from "../index.style.css";
 
-import { scrollIndicatorStyle, text } from "./Page1.style.css";
+import {mainText, scrollIndicatorStyle, subText} from "./Page1.style.css";
 import scrollAnimation from "../../../assets/animations/scroll.json";
 
 const Page1 = () => {
@@ -15,8 +15,8 @@ const Page1 = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 30, duration: 5 }}
       >
-        <h1 className={text}>CAMA</h1>
-        <h2 className={text}>Where your space begin</h2>
+        <h1 className={mainText}>CAMA</h1>
+        <h3 className={subText}>Where your space begin</h3>
       </motion.div>
 
       {/* 스크롤 유도 Lottie 애니메이션 */}

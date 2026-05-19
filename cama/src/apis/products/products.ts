@@ -3,20 +3,22 @@ import { CategoryDetail, CategoryProduct, ProductsSort } from "./type";
 
 export const getProductsByCategoryByCompany = async (
   categoryId: string,
+  categoryDetailId: string,
   companyId: string,
   page: number
 ): Promise<CategoryDetail> => {
   const response = await publicInstance.get(
-    `/categories/${categoryId}/company/${companyId}?page=${page}`
+    `/categories/${categoryId}/detail/${categoryDetailId}/company/${companyId}?page=${page}`
   );
 
   return response.data.data;
 };
 
 export const getProductsByCategory = async (
-  categoryPath: string
+  categoryPath: string,
+  categoryDetailId: string,
 ): Promise<CategoryProduct[]> => {
-  const response = await privateInstance.get(`/categories/${categoryPath}`);
+  const response = await privateInstance.get(`/categories/${categoryPath}/${categoryDetailId}`);
 
   return response.data.data.productAllLists;
 };
@@ -30,10 +32,12 @@ export const postProductsSort = async (
 export const addProduct = async (
   categoryPath: string,
   companyId: string,
-  formData: FormData
+  formData: FormData,
+  categoryDetailId: string,
 ): Promise<void> => {
+  console.log(companyId);
   await privateInstance.post(
-    `/products/${categoryPath}/${companyId}`,
+    `/products/${categoryPath}/${categoryDetailId}/${companyId}`,
     formData
   );
 };
@@ -42,7 +46,7 @@ export const editProduct = async (
   categoryPath: string,
   companyId: string,
   productId: string,
-  formData: FormData
+  formData: FormData,
 ): Promise<void> => {
   await privateInstance.patch(
     `/products/${categoryPath}/${companyId}/${productId}`,
@@ -56,6 +60,7 @@ export const deleteProduct = async (productId: string): Promise<void> => {
 
 export const addCompany = async (
   categoryPath: string,
+  categoryDetailId: string,
   companyName: string,
   companyLogo?: File
 ): Promise<void> => {
@@ -80,7 +85,7 @@ export const addCompany = async (
   }
 
   // multipart/form-data는 자동으로 설정됨
-  await privateInstance.post(`/categories/${categoryPath}/company`, formData);
+  await privateInstance.post(`/categories/${categoryPath}/company/${categoryDetailId}`, formData);
 };
 
 export const deleteCompany = async (
