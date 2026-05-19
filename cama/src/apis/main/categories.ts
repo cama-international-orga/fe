@@ -1,5 +1,11 @@
 import { publicInstance, privateInstance } from "../axios";
-import { CategoryEditItem, HeaderNavItem } from "./type";
+import {
+  CategoryDetailAddItem,
+  CategoryDetailDeleteItem,
+  CategoryDetailEditItem,
+  CategoryEditItem,
+  HeaderNavItem
+} from "./type";
 
 export const getCategories = async (): Promise<HeaderNavItem[]> => {
   const response = await publicInstance.get("/categories");
@@ -12,7 +18,7 @@ export const deleteCategory = async (categoryId: string): Promise<void> => {
 };
 
 export const addCategory = async (
-  category: Omit<HeaderNavItem, "categoryId">
+  category: Omit<HeaderNavItem, "categoryId" | "categoryDetails">
 ): Promise<void> => {
   const formData = new FormData();
 
@@ -31,9 +37,9 @@ export const addCategory = async (
   formData.append("category", categoryBlob);
 
   // 파일 추가
-  if (category.thumbNail) {
-    formData.append("thumbNail", category.thumbNail);
-  }
+  // if (category.thumbNail) {
+  //   formData.append("thumbNail", category.thumbNail);
+  // }
 
   // multipart/form-data는 자동으로 설정됨
   await privateInstance.post("/categories", formData);
@@ -42,7 +48,7 @@ export const addCategory = async (
 export const editCategory = async (
   category: CategoryEditItem
 ): Promise<void> => {
-  const formData = new FormData();
+  //const formData = new FormData();
 
   // JSON 데이터를 문자열로 변환하여 FormData에 추가
   const categoryData = {
@@ -51,19 +57,50 @@ export const editCategory = async (
     categoryBeforePath: category.categoryBeforePath,
   };
 
-  // JSON 데이터를 Blob으로 변환하고 Content-Type 힌트 추가
-  const categoryBlob = new Blob([JSON.stringify(categoryData)], {
-    type: "application/json",
-  });
-
-  // Blob을 FormData에 추가
-  formData.append("category", categoryBlob);
-
-  // 파일 추가 (새로운 이미지가 있는 경우에만)
-  if (category.thumbNail) {
-    formData.append("thumbNail", category.thumbNail);
-  }
+  // // JSON 데이터를 Blob으로 변환하고 Content-Type 힌트 추가
+  // const categoryBlob = new Blob([JSON.stringify(categoryData)], {
+  //   type: "application/json",
+  // });
+  //
+  // // Blob을 FormData에 추가
+  // formData.append("category", categoryBlob);
+  //
+  // // 파일 추가 (새로운 이미지가 있는 경우에만)
+  // if (category.thumbNail) {
+  //   formData.append("thumbNail", category.thumbNail);
+  // }
 
   // multipart/form-data는 자동으로 설정됨
-  await privateInstance.patch(`/categories`, formData);
+  await privateInstance.patch(`/categories`, categoryData);
 };
+
+
+export const addCategoryDetail = async (
+    categoryDetail: Omit<CategoryDetailAddItem, "categoryDetailId">
+): Promise<void> => {
+
+  // JSON 데이터를 문자열로 변환하여 FormData에 추가
+  const categoryData = {
+    categoryDetailName: categoryDetail.categoryDetailName
+  };
+
+  // multipart/form-data는 자동으로 설정됨
+  await privateInstance.post(`/categories/${categoryDetail.categoryPath}/detail`, categoryData);
+};
+
+export const editCategoryDetail = async (
+    categoryDetail: CategoryDetailEditItem
+): Promise<void> => {
+  const categoryData = {
+    categoryDetailName: categoryDetail.categoryDetailName
+  }
+
+
+  await privateInstance.patch(`/categories/${categoryDetail.categoryPath}/detail/${categoryDetail.categoryDetailId}`, categoryData);
+}
+
+export const deleteCategoryDetail = async (categoryDetail: CategoryDetailDeleteItem): Promise<void> => {
+  await privateInstance.delete(`/categories/${categoryDetail.categoryPath}/detail/${categoryDetail.categoryDetailId}`);
+};
+
+

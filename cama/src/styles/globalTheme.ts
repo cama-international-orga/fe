@@ -15,6 +15,8 @@ export const [themeClass, vars] = createTheme({
   breakpoints: {
     mobile: "320px",
     tablet: "768px",
-    desktop: "1024px",
+    desktop: "1440px",
+    widescreen: "1920px",
   },
 });
+

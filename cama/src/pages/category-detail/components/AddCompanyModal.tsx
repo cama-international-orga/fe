@@ -20,9 +20,10 @@ import { addCompany } from "../../../apis/products/products";
 
 interface AddCompanyModalProps {
   categoryPath?: string;
+  categoryDetailId?: string;
 }
 
-const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
+const AddCompanyModal = ({ categoryPath, categoryDetailId }: AddCompanyModalProps) => {
   const { closeAllModals } = useModal();
   const [companyName, setCompanyName] = useState("");
   const [companyLogo, setCompanyLogo] = useState<File | null>(null);
@@ -56,10 +57,11 @@ const AddCompanyModal = ({ categoryPath }: AddCompanyModalProps) => {
 
           await addCompany(
             categoryPath ? categoryPath : "0",
+            categoryDetailId ? categoryDetailId : "0",
             companyName,
             companyLogo || undefined
           );
-          window.location.reload();
+         // window.location.reload();
         }}
         className={form}
       >

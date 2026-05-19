@@ -9,7 +9,7 @@ interface UseFullPageScrollProps {
 
 interface UseFullPageScrollReturn {
   activePage: number;
-  containerRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: React.RefObject<HTMLDivElement>;
   scrollToPage: (pageIndex: number) => void;
 }
 
@@ -21,8 +21,8 @@ export const useFullPageScroll = ({
   const [activePage, setActivePage] = useState(initialPage);
   const containerRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
+  const touchStartYRef = useRef<number>(0);
 
-  // 페이지 이동 함수
   const scrollToPage = useCallback((pageIndex: number) => {
     if (!containerRef.current) return;
 
@@ -35,7 +35,6 @@ export const useFullPageScroll = ({
     }
   }, []);
 
-  // 디바운스된 페이지 변경 핸들러
   const handlePageChange = useCallback(
     debounce((direction: number) => {
       const newPage = Math.max(
@@ -50,7 +49,6 @@ export const useFullPageScroll = ({
     [activePage, totalPages, scrollToPage, onPageChange]
   );
 
-  // 휠 이벤트 핸들러
   const handleWheel = useCallback(
     (e: WheelEvent) => {
       e.preventDefault();
@@ -64,8 +62,32 @@ export const useFullPageScroll = ({
     [handlePageChange]
   );
 
-  // 예시: 페이지가 바뀔 때마다 onPageChange 호출
-  const handleScroll = () => {
+  const handleTouchStart = useCallback((e: TouchEvent) => {
+    touchStartYRef.current = e.touches[0].clientY;
+  }, []);
+
+  // passive: false 로 등록해야 preventDefault() 가 동작함
+  const handleTouchMove = useCallback((e: TouchEvent) => {
+    e.preventDefault();
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: TouchEvent) => {
+      if (isScrollingRef.current) return;
+
+      const deltaY = touchStartYRef.current - e.changedTouches[0].clientY;
+      const SWIPE_THRESHOLD = 50;
+
+      if (Math.abs(deltaY) < SWIPE_THRESHOLD) return;
+
+      isScrollingRef.current = true;
+      const direction = deltaY > 0 ? 1 : -1;
+      handlePageChange(direction);
+    },
+    [handlePageChange]
+  );
+
+  const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     const scrollTop = window.scrollY;
     const children = Array.from(containerRef.current.children) as HTMLElement[];
@@ -79,10 +101,14 @@ export const useFullPageScroll = ({
 
     setActivePage(pageIndex);
     if (onPageChange) onPageChange(pageIndex);
-  };
+  }, [onPageChange]);
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
     const container = containerRef.current;
     if (container) {
       container.addEventListener("scroll", handleScroll);
@@ -90,9 +116,12 @@ export const useFullPageScroll = ({
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       if (container) container.removeEventListener("scroll", handleScroll);
     };
-  }, [handleWheel, handleScroll, onPageChange]);
+  }, [handleWheel, handleTouchStart, handleTouchMove, handleTouchEnd, handleScroll]);
 
   return {
     activePage,

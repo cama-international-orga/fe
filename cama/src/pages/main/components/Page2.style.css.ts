@@ -1,23 +1,41 @@
-// components/Page2.style.css.ts
 import { style } from "@vanilla-extract/css";
 
 export const irregularGrid = style({
   display: "grid",
   gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-  gridTemplateRows: "auto",
+  gridTemplateRows: "1fr 1fr 1fr 1fr",
   width: "100%",
   height: "100%",
-  margin: "0 auto",
-  padding: "40px 0",
+
+  "@media": {
+    "(max-width: 1100px)": {
+      gridTemplateColumns: "repeat(3, 1fr)",
+      gridTemplateRows: "min-content repeat(3, 1fr)",
+    },
+    "(max-width: 768px)": {
+      gridTemplateColumns: "repeat(2, 1fr)",
+      gridTemplateRows: "min-content repeat(4, 1fr)",
+    },
+  },
 });
 
 export const productTitleContainer = style({
-  backgroundColor: "#1A1A2E", // 어두운 배경색
+  backgroundColor: "#1A1A2E",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   padding: "20px",
+
+  "@media": {
+    "(max-width: 1100px)": {
+      flexDirection: "row",
+      gap: "0.75rem",
+      padding: "0.75rem 2rem",
+      gridColumn: "1 / -1",
+      minHeight: "70px",
+    },
+  },
 });
 
 export const imageItem = style({
@@ -64,12 +82,16 @@ export const imageOverlay = style({
 
 export const overlayText = style({
   color: "white",
-  fontSize: "1.5rem",
+  fontSize: "clamp(1rem, 1.5vw, 2rem)",
   fontWeight: "bold",
   textAlign: "center",
-
   transform: "translateY(20px)",
   transition: "transform 0.3s ease",
+
+  "@media": {
+    "(min-width: 1920px)": { fontSize: "clamp(1.2rem, 1.8vw, 2.5rem)" },
+    "(min-width: 2560px)": { fontSize: "clamp(1.5rem, 2vw, 3rem)" },
+  },
 
   selectors: {
     [`${imageItem}:hover &`]: {

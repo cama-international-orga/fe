@@ -7,6 +7,7 @@ import {
   deleteBtn,
   editBtn,
   productNameContainer,
+  card,
 } from "./Product.style.css";
 import { Products } from "../../../apis/products/type";
 import Edit from "../../../assets/svg/edit.svg?react";
@@ -30,44 +31,48 @@ const ProductContainer: React.FC<ProductProps> = ({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
-      className={productItem}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={onClick}
-    >
-      <img src={productsImage} alt={productsName} />
-      <div className={`${overlay} ${hovered ? showOverlay : ""}`}>
-        <div className={productNameContainer}>{productsName}</div>
-        {isLoggedIn && (
-          <div>
-            {onEdit && (
-              <Edit
-                className={editBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onEdit(productsId);
-                }}
-                width={24}
-                height={24}
-                fill="white"
-              />
+      <div className={card}>
+        <div
+            className={productItem}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            onClick={onClick}
+        >
+          <img src={productsImage} alt={productsName} />
+          <div className={`${overlay} ${hovered ? showOverlay : ""}`}>
+            {isLoggedIn && (
+                <div>
+                  {onEdit && (
+                      <Edit
+                          className={editBtn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onEdit(productsId);
+                          }}
+                          width={24}
+                          height={24}
+                          fill="white"
+                      />
+                  )}
+                  {onRemove && (
+                      <button
+                          className={deleteBtn}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onRemove(productsId);
+                          }}
+                      >
+                        X
+                      </button>
+                  )}
+                </div>
             )}
-            {onRemove && (
-              <button
-                className={deleteBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemove(productsId);
-                }}
-              >
-                X
-              </button>
-            )}
+
           </div>
-        )}
+
+        </div>
+        <div className={productNameContainer}>{productsName}</div>
       </div>
-    </div>
   );
 };
 

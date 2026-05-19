@@ -1,5 +1,7 @@
 export interface ProductDetail {
   categoryPath: string;
+  categoryDetailId: number;
+  categoryDetailName: string;
   companyId: string;
   companyImage: string;
   model: {
@@ -14,5 +16,11 @@ export interface ProductDetail {
   }[];
   detailImages: {
     detailImage: string;
+  }[];
+  specificationImages: {
+    specImage: string;
+  }[];
+  installImages: {
+    installImage: string;
   }[];
 }

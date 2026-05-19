@@ -1,18 +1,18 @@
 import { style } from "@vanilla-extract/css";
 
 export const scrollContainer = style({
-  width: "100vw",
-  height: "500vh",
+  width: "100%",
+  height: "calc(var(--vh, 1vh) * 500)",
   position: "relative",
   scrollBehavior: "smooth",
   overflowY: "auto",
   overflowX: "hidden",
-  WebkitOverflowScrolling: "touch", // iOS 스크롤 부드럽게
+  WebkitOverflowScrolling: "touch",
 });
 
 export const pageContainer = style({
   width: "100%",
-  height: "100vh",
+  height: "calc(var(--vh, 1vh) * 100)",
   scrollSnapAlign: "start",
   scrollSnapStop: "always",
   position: "relative",
@@ -33,25 +33,49 @@ export const lastPageContainer = style({
 
 export const paginationContainer = style({
   position: "fixed",
-  right: "20px",
+  right: "16px",
   top: "50%",
   transform: "translateY(-50%)",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
   zIndex: 100,
+
+  "@media": {
+    "(max-width: 768px)": { display: "none" },
+    "(min-width: 1920px)": { right: "24px" },
+    "(min-width: 2560px)": { right: "32px" },
+  },
 });
 
 export const paginationDot = style({
-  width: "12px",
-  height: "12px",
+  width: "10px",
+  height: "10px",
   borderRadius: "50%",
   backgroundColor: "rgba(255, 255, 255, 0.3)",
   border: "2px solid rgba(255, 255, 255, 0.5)",
   cursor: "pointer",
   transition: "all 0.3s ease",
-  margin: "8px 0",
+  margin: "6px 0",
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+
+  "@media": {
+    "(min-width: 1440px)": {
+      width: "12px",
+      height: "12px",
+      margin: "8px 0",
+    },
+    "(min-width: 1920px)": {
+      width: "14px",
+      height: "14px",
+      margin: "10px 0",
+    },
+    "(min-width: 2560px)": {
+      width: "16px",
+      height: "16px",
+      margin: "12px 0",
+    },
+  },
 });
 
 export const activeDot = style({
@@ -75,5 +99,4 @@ export const textLayer = style({
   zIndex: 2,
   color: "white",
   textAlign: "center",
-  fontSize: "4rem",
 });

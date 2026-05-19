@@ -46,8 +46,7 @@ export const AddCategoryModal = () => {
           e.preventDefault();
           await handleAdd({
             categoryName,
-            categoryPath,
-            thumbNail: categoryImage,
+            categoryPath
           });
           closeAllModals();
           window.location.reload();

@@ -8,11 +8,39 @@ export const modalContainer = style({
   padding: "32px 28px 28px 28px",
   boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
   margin: "0 auto",
-  maxWidth: "540px",
-  minWidth: "340px",
+  width: "clamp(300px, 90vw, 540px)",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  boxSizing: "border-box",
+
+  "@media": {
+    "(max-width: 767px)": {
+      width: "calc(100vw - 32px)",
+      padding: "22px 16px 20px",
+      borderRadius: "12px",
+      maxHeight: "92vh",
+    },
+    "(min-width: 1280px)": {
+      width: "580px",
+      padding: "34px 30px 30px",
+    },
+    "(min-width: 1440px)": {
+      width: "620px",
+      padding: "36px 32px 32px",
+      borderRadius: "18px",
+    },
+    "(min-width: 1920px)": {
+      width: "700px",
+      padding: "40px 36px 36px",
+      borderRadius: "20px",
+    },
+    "(min-width: 2560px)": {
+      width: "800px",
+      padding: "48px 44px 44px",
+      borderRadius: "24px",
+    },
+  },
 });
 
 export const modalTitle = style({
@@ -21,6 +49,26 @@ export const modalTitle = style({
   textAlign: "left",
   marginBottom: "24px",
   width: "100%",
+
+  "@media": {
+    "(max-width: 767px)": {
+      fontSize: "1.5rem",
+      marginBottom: "18px",
+    },
+    "(min-width: 1280px)": { fontSize: "2.1rem" },
+    "(min-width: 1440px)": {
+      fontSize: "2.2rem",
+      marginBottom: "26px",
+    },
+    "(min-width: 1920px)": {
+      fontSize: "2.4rem",
+      marginBottom: "30px",
+    },
+    "(min-width: 2560px)": {
+      fontSize: "2.8rem",
+      marginBottom: "36px",
+    },
+  },
 });
 
 export const label = style({
@@ -29,6 +77,25 @@ export const label = style({
   margin: "16px 0 8px 0",
   textAlign: "left",
   width: "100%",
+
+  "@media": {
+    "(max-width: 767px)": {
+      fontSize: "0.95rem",
+      margin: "12px 0 6px 0",
+    },
+    "(min-width: 1440px)": {
+      fontSize: "1.12rem",
+      margin: "18px 0 9px 0",
+    },
+    "(min-width: 1920px)": {
+      fontSize: "1.2rem",
+      margin: "20px 0 10px 0",
+    },
+    "(min-width: 2560px)": {
+      fontSize: "1.35rem",
+      margin: "24px 0 12px 0",
+    },
+  },
 });
 
 export const imageDropZone = style({
@@ -47,6 +114,26 @@ export const imageDropZone = style({
   marginBottom: "8px",
   transition: "border 0.2s, background 0.2s",
   textAlign: "center",
+
+  "@media": {
+    "(max-width: 767px)": {
+      minHeight: "120px",
+      fontSize: "0.95rem",
+    },
+    "(min-width: 1440px)": {
+      minHeight: "180px",
+      fontSize: "1.15rem",
+    },
+    "(min-width: 1920px)": {
+      minHeight: "200px",
+      fontSize: "1.2rem",
+    },
+    "(min-width: 2560px)": {
+      minHeight: "240px",
+      fontSize: "1.35rem",
+    },
+  },
+
   selectors: {
     "&:hover": {
       border: "2px solid #3a90eb",
@@ -59,6 +146,12 @@ export const imageIcon = style({
   fontSize: "2.5rem",
   color: "#bdbdbd",
   marginBottom: "8px",
+
+  "@media": {
+    "(min-width: 1440px)": { fontSize: "2.8rem" },
+    "(min-width: 1920px)": { fontSize: "3.2rem" },
+    "(min-width: 2560px)": { fontSize: "3.8rem" },
+  },
 });
 
 export const imagePreview = style({
@@ -71,6 +164,13 @@ export const imagePreview = style({
   border: "1.5px solid #e5e7eb",
   marginBottom: "8px",
   cursor: "pointer",
+
+  "@media": {
+    "(max-width: 767px)": { height: "90px" },
+    "(min-width: 1440px)": { height: "140px", maxWidth: "480px" },
+    "(min-width: 1920px)": { height: "160px", maxWidth: "540px" },
+    "(min-width: 2560px)": { height: "200px", maxWidth: "640px" },
+  },
 });
 
 export const imageGuide = style({
@@ -79,6 +179,13 @@ export const imageGuide = style({
   margin: "4px 0 16px 0",
   width: "100%",
   textAlign: "left",
+
+  "@media": {
+    "(max-width: 767px)": { fontSize: "0.85rem" },
+    "(min-width: 1440px)": { fontSize: "1.02rem" },
+    "(min-width: 1920px)": { fontSize: "1.08rem" },
+    "(min-width: 2560px)": { fontSize: "1.2rem" },
+  },
 });
 
 export const input = style({
@@ -91,10 +198,30 @@ export const input = style({
   marginBottom: "16px",
   outline: "none",
   transition: "border 0.2s",
-  selectors: {
-    "&:focus": {
-      border: "1.5px solid #3a90eb",
+
+  "@media": {
+    "(max-width: 767px)": {
+      width: "100%",
+      padding: "11px 14px",
+      fontSize: "0.9rem",
     },
+    "(min-width: 1440px)": {
+      padding: "15px 18px",
+      fontSize: "1.05rem",
+    },
+    "(min-width: 1920px)": {
+      padding: "17px 20px",
+      fontSize: "1.1rem",
+    },
+    "(min-width: 2560px)": {
+      padding: "20px 24px",
+      fontSize: "1.2rem",
+      borderRadius: "12px",
+    },
+  },
+
+  selectors: {
+    "&:focus": { border: "1.5px solid #3a90eb" },
   },
 });
 
@@ -104,6 +231,13 @@ export const inputGuide = style({
   margin: "-10px 0 16px 0",
   width: "100%",
   textAlign: "left",
+
+  "@media": {
+    "(max-width: 767px)": { fontSize: "0.82rem" },
+    "(min-width: 1440px)": { fontSize: "1rem" },
+    "(min-width: 1920px)": { fontSize: "1.05rem" },
+    "(min-width: 2560px)": { fontSize: "1.18rem" },
+  },
 });
 
 export const addButton = style({
@@ -118,14 +252,33 @@ export const addButton = style({
   marginTop: "8px",
   cursor: "pointer",
   transition: "background 0.2s",
-  selectors: {
-    "&:hover": {
-      background: "#3a90eb",
+
+  "@media": {
+    "(max-width: 767px)": {
+      padding: "13px 0",
+      fontSize: "1rem",
     },
+    "(min-width: 1440px)": {
+      padding: "18px 0",
+      fontSize: "1.2rem",
+    },
+    "(min-width: 1920px)": {
+      padding: "20px 0",
+      fontSize: "1.3rem",
+      borderRadius: "12px",
+    },
+    "(min-width: 2560px)": {
+      padding: "24px 0",
+      fontSize: "1.45rem",
+      borderRadius: "14px",
+    },
+  },
+
+  selectors: {
+    "&:hover": { background: "#3a90eb" },
   },
 });
 
-// 수정 모달 전용 스타일
 export const currentImageContainer = style({
   width: "100%",
   marginBottom: "16px",
@@ -134,6 +287,12 @@ export const currentImageContainer = style({
   border: "1px solid #e5e7eb",
   borderRadius: "10px",
   background: "#f8f9fa",
+
+  "@media": {
+    "(min-width: 1440px)": { padding: "18px" },
+    "(min-width: 1920px)": { padding: "20px", borderRadius: "12px" },
+    "(min-width: 2560px)": { padding: "24px", borderRadius: "14px" },
+  },
 });
 
 export const currentImageLabel = style({
@@ -142,6 +301,12 @@ export const currentImageLabel = style({
   color: "#666",
   marginBottom: "8px",
   textAlign: "left",
+
+  "@media": {
+    "(min-width: 1440px)": { fontSize: "0.95rem" },
+    "(min-width: 1920px)": { fontSize: "1rem" },
+    "(min-width: 2560px)": { fontSize: "1.12rem" },
+  },
 });
 
 export const currentImage = style({
@@ -153,6 +318,13 @@ export const currentImage = style({
   background: "#f7f8fa",
   border: "1px solid #e5e7eb",
   marginBottom: "12px",
+
+  "@media": {
+    "(max-width: 767px)": { height: "90px" },
+    "(min-width: 1440px)": { height: "140px", maxWidth: "480px" },
+    "(min-width: 1920px)": { height: "160px", maxWidth: "540px" },
+    "(min-width: 2560px)": { height: "200px", maxWidth: "640px" },
+  },
 });
 
 export const imageChangeButton = style({
@@ -165,6 +337,22 @@ export const imageChangeButton = style({
   fontWeight: 600,
   cursor: "pointer",
   transition: "all 0.2s",
+
+  "@media": {
+    "(min-width: 1440px)": {
+      padding: "9px 18px",
+      fontSize: "0.95rem",
+    },
+    "(min-width: 1920px)": {
+      padding: "10px 20px",
+      fontSize: "1rem",
+    },
+    "(min-width: 2560px)": {
+      padding: "12px 24px",
+      fontSize: "1.1rem",
+    },
+  },
+
   selectors: {
     "&:hover": {
       background: "#3a90eb",
